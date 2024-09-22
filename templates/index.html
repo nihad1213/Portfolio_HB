@@ -1,0 +1,74 @@
+{% include "header.html" %}
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Welcome to the Event App</h2>
+            <button onclick="window.location.href='events.html'">See Events</button>
+            <button onclick="window.location.href='create-event.html'">Create Event</button>
+        </div>
+    </section>
+
+    <div class="mb-5">
+        <div class="row align-items-center">
+            <div class="col-sm mb-3 mb-sm-0">
+                <h1 class="h2 mb-0">Filter</h1>
+            </div>
+            <div class="parent-container">
+                <div class="col-sm-auto">
+                    <select class="form-select form-select-sm">
+                        <option value="mostRecent" selected>Most recent</option>
+                        <option value="HighestPrice">Old posts</option>
+                        <option value="LowestPrice">New posts</option>
+                        <option value="mostReduced">Popular post</option>
+                        <option value="mostPopular">Recently added posts</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="featured-events">
+        <h2>Featured Events</h2>
+
+        <div class="event-card" data-date="2024-09-15">
+            <div class="event-image">
+                <img src="https://i.imgur.com/bh1CStD.png" alt="Event 1">
+                <div class="event-interactions">
+                    <button class="attend-button">Yes, I will attend</button>
+                    <button class="not-attend-button">No, I won't attend</button>
+                    <div class="event-interactions2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+                            <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1z"/>
+                            <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1"/>
+                        </svg>
+                    </div>
+                    <button class="like-button">❤ 120</button>
+                </div>
+            </div>
+            <div class="event-details">
+                <h3>Event 1</h3>
+                <p>Date & Time: September 15, 2024, 6:00 PM</p>
+                <p class="event-description">This is the event description. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout...</p>
+                <p class="description">Attendance: 150 people</p>
+            </div>
+        </div>
+
+        <div class="event-card" data-date="2024-10-10">
+            <div class="event-image">
+                <img src="https://i.imgur.com/bh1CStD.png" alt="Event 2">
+                <div class="event-interactions">
+                    <button class="like-button">❤ 75</button>
+                    <button class="attend-button">Yes, I will attend</button>
+                    <button class="not-attend-button">No, I won't attend</button>
+                </div>
+            </div>
+            <div class="event-details">
+                <h3>Event 2</h3>
+                <p>Date & Time: October 10, 2024, 7:00 PM</p>
+                <p class="event-description">This is the event description. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout...</p>
+                <p class="description">Attendance: 200 people</p>
+            </div>
+        </div>
+    </section>
+
+{% include "footer.html" %}
