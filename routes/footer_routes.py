@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_mail import Mail, Message
 from datetime import datetime
@@ -51,16 +53,15 @@ def submit_contact():
     email = request.form['email']
     message = request.form['message']
 
-    # Fetch email username and default sender from environment
-    sender_email = current_app.config['MAIL_USERNAME']  # This is your Gmail account
-    default_sender = 'nihadnemetli9900@gmail.com'  # Set this to the email you want to display as the sender
+    sender_email = current_app.config['MAIL_USERNAME'] 
+    default_sender = current_app.config['MAIL_DEFAULT_SENDER']
 
     # Create email message
     msg = Message(
         subject=f"New Message From {name}",
-        sender=default_sender,  # Set the sender to the desired email
-        recipients=[sender_email],  # This is where the email is sent (your Gmail)
-        reply_to=email  # Replies will go to the user's email
+        sender=default_sender,
+        recipients=[sender_email],
+        reply_to=email
     )
 
     # Set custom headers for the sender information

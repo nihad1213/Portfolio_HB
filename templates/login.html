@@ -1,0 +1,32 @@
+{% include 'header.html' %}
+
+<main>
+    <div class="main-container">
+        <h1 class="title">Login</h1>
+        <p class="description">Please enter your email and password to log in.</p>
+
+        <div class="flash-messages">
+            <!-- Add flash message like if it is important -->
+        </div>
+
+        <form action="/login" method="POST"> <!-- Change the action URL as per your routing -->
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password" class="form-input" required>
+            </div>
+
+            <button type="submit" class="form-button">Login</button>
+        </form>
+
+        <p class="description" style="text-align: center; margin-top: 20px;">
+            Don’t have an account? <a href="/register" style="color: #007bff;">Click here to register</a>.
+        </p>
+    </div>
+</main>
+
+{% include 'footer.html' %}

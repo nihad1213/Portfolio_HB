@@ -28,9 +28,11 @@ mail = Mail(app)
 
 # importing Routes
 from routes.footer_routes import footerRoutes, get_current_year
+from routes.user_routes import userRoutes
 
 # Registering blueprints
 app.register_blueprint(footerRoutes)
+app.register_blueprint(userRoutes)
 
 # Route for index
 @app.route('/')
