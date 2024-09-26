@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 body, h1, h2, h3, p, a, button {
@@ -52,7 +52,7 @@ nav a:hover {
 }
 
 .hero {
-    background: url('https://i.imgur.com/zuNIY0o.png') no-repeat center center/cover;
+    background: url('../photos/headerimage.jpeg') no-repeat center center/cover;
     color: #fff;
     padding: 4rem 0;
     text-align: center;
@@ -91,18 +91,20 @@ nav a:hover {
     background: url('https://i.imgur.com/AODE4pe.jpg') no-repeat center center/cover;
     color: #fff;
 }
+
 .parent-container {
-    display: flex; /* Or use grid, float, or margin as needed */
-    justify-content: flex-end; /* For flexbox */
-  }
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* Target all <h2> elements with the class 'mb-0' */
 .h2 mb-0 {
-    font-size: 0.875rem; /* Adjust size for "little letters" */
-    color: black; /* Set text color to black */
-    text-align: right; /* Align text to the right */
-    margin-bottom: 0; /* Ensure no bottom margin */
-  }
-  
+    font-size: 0.875rem;
+    color: black;
+    text-align: right;
+    margin-bottom: 0;
+}
+
 #filter-toggle {
     background: rgb(155, 192, 81);
     border: none;
@@ -167,21 +169,20 @@ nav a:hover {
     object-fit: cover;
     border-radius: 20px;
 }
+
 .event-details .description {
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
 }
+
 .event-description {
-    font-size: 1.3rem; 
-    line-height: 1.6; 
-    font-family: 'Georgia', serif; 
-    color: #333; 
-    margin-bottom: 1rem; 
-    padding: 0.5rem 0; 
-    text-align: justify; 
+    font-size: 1.3rem;
+    line-height: 1.6;
+    font-family: 'Georgia', serif;
+    color: #333;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    text-align: justify;
 }
-
-
-
 
 .event-details {
     flex: 2;
@@ -193,15 +194,16 @@ nav a:hover {
     align-items: center;
     margin-top: 10px;
 }
-.event-interactions2 svg{
+
+.event-interactions2 svg {
     width: 30px;
     height: 30px;
     display: flex;
-    bottom: 40px; 
-    left: 40px; 
+    bottom: 40px;
+    left: 40px;
     display: flex;
     align-items: center;
-    gap: 5rem; 
+    gap: 5rem;
 }
 
 .like-button {
@@ -230,7 +232,7 @@ nav a:hover {
 
 .not-attend-button {
     background-color: rgb(102, 110, 228);
-    color:#ddd
+    color: #ddd;
 }
 
 .views-counter {
@@ -249,256 +251,62 @@ nav a:hover {
     color: #333;
 }
 
-.create-event-form {
-    padding: 2rem;
-    background: #fff;
-    border: 1px solid #ddd;
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.category-card {
+    background-color: #fff;
     border-radius: 8px;
-    margin: 2rem auto;
-    max-width: 600px;
-}
-
-.create-event-form h2 {
-    margin-bottom: 1rem;
-}
-
-.create-event-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-.create-event-form input,
-.create-event-form textarea {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.create-event-form button {
-    background: #f4b400;
-    border: none;
-    color: #fff;
-    padding: 0.75rem;
-    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     cursor: pointer;
-    border-radius: 4px;
+    margin: 20px;
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease-in-out;
 }
 
-.create-event-form button:hover {
-    background: #e4a600;
+.category-card:hover {
+    transform: translateY(-10px);
 }
 
-.create-event-form input[type="file"] {
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-body {
-    background: #fbfbfd;
-}
-
-.new_footer_area {
-    background: #19107f;
-}
-
-
-.new_footer_top {
-    padding: 120px 0px 270px;
-    position: relative;
-      overflow-x: hidden;
-}
-.new_footer_area .footer_bottom {
-    padding-top: 5px;
-    padding-bottom: 50px;
-}
-.footer_bottom {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 20px;
-    color: #e2e2e2;
-    padding: 27px 0px;
-}
-.new_footer_top .company_widget p {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 28px;
-    color: #c4c4c4;
-    margin-bottom: 20px;
-}
-.new_footer_top .company_widget .f_subscribe_two .btn_get {
-    border-width: 1px;
-    margin-top: 20px;
-}
-.btn_get_two:hover {
-    background: transparent;
-    color: #5e2ced;
-}
-.btn_get:hover {
-    color: #fff;
-    background: #6754e2;
-    border-color: #6754e2;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
-    text-decoration: none;
-    outline: none;
-}
-
-
-
-.new_footer_top .f_widget.about-widget .f_list li a:hover {
-    color: #5e2ced;
-}
-.new_footer_top .f_widget.about-widget .f_list li {
-    margin-bottom: 11px;
-}
-.f_widget.about-widget .f_list li:last-child {
-    margin-bottom: 0px;
-}
-.f_widget.about-widget .f_list li {
-    margin-bottom: 15px;
-}
-.f_widget.about-widget .f_list {
-    margin-bottom: 0px;
-}
-.new_footer_top .f_social_icon a {
-    width: 44px;
-    height: 44px;
-    line-height: 43px;
-    background: transparent;
-    border: 1px solid #e2e2eb;
-    font-size: 24px;
-}
-.f_social_icon a {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    font-size: 14px;
-    line-height: 45px;
-    color: #858da8;
-    display: inline-block;
-    background: #000000;
-    text-align: center;
-    -webkit-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    transition: all 0.2s linear;
-}
-.ti-facebook:before {
-    content: "\e741";
-}
-.ti-twitter-alt:before {
-    content: "\e74b";
-}
-.ti-vimeo-alt:before {
-    content: "\e74a";
-}
-.ti-pinterest:before {
-    content: "\e731";
-}
-
-.btn_get_two {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    background: #5e2ced;
-    border-color: #5e2ced;
-    color: #070707;
-}
-
-.btn_get_two:hover {
-    background: transparent;
-    color: #5e2ced;
-}
-
-.new_footer_top .f_social_icon a:hover {
-    background: #5e2ced;
-    border-color: #5e2ced;
-  color:rgb(255, 255, 255);
-}
-.new_footer_top .f_social_icon a + a {
-    margin-left: 4px;
-}
-.new_footer_top .f-title {
-    margin-bottom: 30px;
-    color: #cdcdce;
-}
-.f_600 {
-    font-weight: 600;
-}
-.f_size_18 {
-    font-size: 18px;
-}
-h1, h2, h3, h4, h5, h6 {
-    color: #ffffff;
-}
-.new_footer_top .f_widget.about-widget .f_list li a {
-    color: #6a7695;
-}
-
-
-.new_footer_top .footer_bg {
-    position: absolute;
-    bottom: 0;
-    background: url("https://i.imgur.com/ZtvEZH6.jpg") no-repeat scroll center 0;
+.category-card img {
     width: 100%;
-    height: 1000px;
-}
-
-.new_footer_top .footer_bg .footer_bg_one {
-    background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia0PYPxwT5ifToyP3SNZeQWfJEWrUENYA5IXM6sN5vLwAKvaJS1pQVu8mOFFUa_ET4JuHNTFAxKURFerJYHDUWXLXl1vDofYXuij45JZelYOjEFoCOn7E6Vxu0fwV7ACPzArcno1rYuVxGB7JY6G7__e4_KZW4lTYIaHSLVaVLzklZBLZnQw047oq5-Q/s16000/volks.gif") no-repeat center center;
-    width: 330px;
-    height: 105px;
-  background-size:40%;
-    position: absolute;
-    bottom: 0;
-    left: 30%;
-    -webkit-animation: myfirst 22s linear infinite;
-    animation: myfirst 22s linear infinite;
-}
-
-.new_footer_top .footer_bg .footer_bg_two {
-    background: url("https://i.imgur.com/oj8FS4f.png") no-repeat center center;
-    width: 320px;
     height: 200px;
-  background-size:40%;
-    bottom: 0;
-    left: 38%;
-    position: absolute;
-    -webkit-animation: myfirst 30s linear infinite;
-    animation: myfirst 30s linear infinite;
+    object-fit: cover;
 }
 
-
-
-@-moz-keyframes myfirst {
-  0% {
-    left: -25%;
-  }
-  100% {
-    left: 100%;
-  }
+.category-info {
+    padding: 15px;
+    text-align: center;
 }
 
-@-webkit-keyframes myfirst {
-  0% {
-    left: -25%;
-  }
-  100% {
-    left: 100%;
-  }
+.category-info h3 {
+    color: #333;
 }
 
-@keyframes myfirst {
-  0% {
-    left: -25%;
-  }
-  100% {
-    left: 100%;
-  }
+.event-count {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+h1 a {
+    color: white; /* Change to your desired color */
+    text-decoration: none; /* Remove underline if needed */
+}
+
+h1 a:hover {
+    color: blue; /* Change color on hover if desired */
+}
+
+.logo {
+    width: 40px; /* Adjust size as needed */
+    height: auto;
+    vertical-align: middle; /* Aligns the logo with the text */
+    margin-right: 10px; /* Space between the logo and text */
 }
 
 

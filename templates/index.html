@@ -1,5 +1,7 @@
-{% include "header.html" %}
+{% extends "layouts/base.html" %}
 
+{% block content %}
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h2>Welcome to the Event App</h2>
@@ -7,7 +9,32 @@
             <button onclick="window.location.href='create-event.html'">Create Event</button>
         </div>
     </section>
+    
+    <section class="categories">
+        <div class="category-card" onclick="window.location.href='sports-events.html';">
+            <img src="{{ url_for('static', filename='photos/sport.jpg') }}" alt="Sports">
+            <div class="category-info">
+                <h3>Sports</h3>
+                <p class="event-count">3 Events</p>
+            </div>
+        </div>
+        <div class="category-card" onclick="window.location.href='science-events.html';">
+            <img src="{{ url_for('static', filename='photos/science.jpg') }}" alt="Science">
+            <div class="category-info">
+                <h3>Science</h3>
+                <p class="event-count">5 Events</p>
+            </div>
+        </div>
+        <div class="category-card" onclick="window.location.href='art-events.html';">
+            <img src="{{ url_for('static', filename='photos/art.jpg') }}" alt="Art">
+            <div class="category-info">
+                <h3>Art</h3>
+                <p class="event-count">2 Events</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- Filter Section -->
     <div class="mb-5">
         <div class="row align-items-center">
             <div class="col-sm mb-3 mb-sm-0">
@@ -27,12 +54,14 @@
         </div>
     </div>
 
+    <!-- Featured Events Section -->
     <section class="featured-events">
         <h2>Featured Events</h2>
 
+        <!-- Event 1 -->
         <div class="event-card" data-date="2024-09-15">
             <div class="event-image">
-                <img src="https://i.imgur.com/bh1CStD.png" alt="Event 1">
+                <img src="{{ url_for('static', filename='photos/eventimage.jpg') }}" alt="Event 1">
                 <div class="event-interactions">
                     <button class="attend-button">Yes, I will attend</button>
                     <button class="not-attend-button">No, I won't attend</button>
@@ -53,9 +82,10 @@
             </div>
         </div>
 
+        <!-- Event 2 -->
         <div class="event-card" data-date="2024-10-10">
             <div class="event-image">
-                <img src="https://i.imgur.com/bh1CStD.png" alt="Event 2">
+                <img src="{{ url_for('static', filename='photos/eventimage.jpg') }}" alt="Event 2">
                 <div class="event-interactions">
                     <button class="like-button">❤ 75</button>
                     <button class="attend-button">Yes, I will attend</button>
@@ -70,5 +100,4 @@
             </div>
         </div>
     </section>
-
-{% include "footer.html" %}
+{% endblock %}

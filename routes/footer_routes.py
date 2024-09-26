@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_mail import Mail, Message
 from datetime import datetime
@@ -15,35 +17,35 @@ def get_current_year():
 # Routes and Functions
 @footerRoutes.route('/festivals')
 def festivals():
-    return render_template('festivals.html', current_year=get_current_year())
+    return render_template('footer-links/festivals.html', current_year=get_current_year())
 
 @footerRoutes.route('/concerts')
 def concerts():
-    return render_template('concerts.html', current_year=get_current_year())
+    return render_template('footer-links/concerts.html', current_year=get_current_year())
 
 @footerRoutes.route('/cultural')
 def cultural():
-    return render_template('cultural.html', current_year=get_current_year())
+    return render_template('footer-links/cultural.html', current_year=get_current_year())
 
 @footerRoutes.route('/workshops')
 def workshops():
-    return render_template('workshops.html', current_year=get_current_year())
+    return render_template('footer-links/workshops.html', current_year=get_current_year())
 
 @footerRoutes.route('/about-us')
 def about():
-    return render_template('about-us.html', current_year=get_current_year())
+    return render_template('footer-links/about-us.html', current_year=get_current_year())
 
 @footerRoutes.route('/story')
 def story():
-    return render_template('story.html', current_year=get_current_year())
+    return render_template('footer-links/story.html', current_year=get_current_year())
 
 @footerRoutes.route('/contact-us')
 def contact():
-    return render_template('contact-us.html', current_year=get_current_year())
+    return render_template('footer-links/contact-us.html', current_year=get_current_year())
 
 @footerRoutes.route('/faqs')
 def faqs():
-    return render_template('faqs.html', current_year=get_current_year())
+    return render_template('footer-links/faqs.html', current_year=get_current_year())
 
 @footerRoutes.route('/submit-contact', methods=['POST'])
 def submit_contact():
@@ -51,16 +53,15 @@ def submit_contact():
     email = request.form['email']
     message = request.form['message']
 
-    # Fetch email username and default sender from environment
-    sender_email = current_app.config['MAIL_USERNAME']  # This is your Gmail account
-    default_sender = 'nihadnemetli9900@gmail.com'  # Set this to the email you want to display as the sender
+    sender_email = current_app.config['MAIL_USERNAME'] 
+    default_sender = current_app.config['MAIL_DEFAULT_SENDER']
 
     # Create email message
     msg = Message(
         subject=f"New Message From {name}",
-        sender=default_sender,  # Set the sender to the desired email
-        recipients=[sender_email],  # This is where the email is sent (your Gmail)
-        reply_to=email  # Replies will go to the user's email
+        sender=default_sender,
+        recipients=[sender_email],
+        reply_to=email
     )
 
     # Set custom headers for the sender information
