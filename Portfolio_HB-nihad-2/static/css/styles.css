@@ -1,0 +1,315 @@
+body, h1, h2, h3, p, a, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #19107f;
+    background-color: #f4f4f4;
+}
+
+header {
+    background: #19107f;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header input[type="text"] {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+}
+
+nav a {
+    color: #fff;
+    margin: 0 0.5rem;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.hero {
+    background: url('../photos/headerimage.jpeg') no-repeat center center/cover;
+    color: #fff;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero-content {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.hero h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.hero button {
+    background: #f4b400;
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0.5rem;
+}
+
+.hero button:hover {
+    background: #e4a600;
+}
+
+.filter-events {
+    padding: 5rem 70rem;
+    text-align: flex;
+    background: url('https://i.imgur.com/AODE4pe.jpg') no-repeat center center/cover;
+    color: #fff;
+}
+
+.parent-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Target all <h2> elements with the class 'mb-0' */
+.h2 mb-0 {
+    font-size: 0.875rem;
+    color: black;
+    text-align: right;
+    margin-bottom: 0;
+}
+
+#filter-toggle {
+    background: rgb(155, 192, 81);
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0.5rem;
+}
+
+#filter-toggle:hover {
+    background: #e4a600;
+}
+
+.filter-options {
+    display: none;
+    text-align: center;
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 0.5rem 0;
+}
+
+.filter-option {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.filter-option:hover {
+    background: #f4b400;
+}
+
+.featured-events {
+    padding: 4rem 2rem;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.event-card {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    background: #fff;
+    gap: 25rem;
+}
+
+.event-image {
+    flex: 1;
+}
+
+.event-image img {
+    width: 200%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.event-details .description {
+    margin-bottom: 2rem;
+}
+
+.event-description {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    font-family: 'Georgia', serif;
+    color: #333;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    text-align: justify;
+}
+
+.event-details {
+    flex: 2;
+    padding-left: 1rem;
+}
+
+.event-interactions {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.event-interactions2 svg {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    bottom: 40px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+.like-button {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.like-button:hover {
+    background-color: #0056b3;
+}
+
+.attend-button, .not-attend-button {
+    background-color: rgb(155, 192, 81);
+    color: #333;
+    border: none;
+    padding: 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-left: 1rem;
+}
+
+.not-attend-button {
+    background-color: rgb(102, 110, 228);
+    color: #ddd;
+}
+
+.views-counter {
+    display: flex;
+    align-items: center;
+}
+
+.views-counter img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.views-count {
+    font-size: 14px;
+    color: #333;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.category-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    margin: 20px;
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+}
+
+.category-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.category-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.category-info h3 {
+    color: #333;
+}
+
+.event-count {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+h1 a {
+    color: white; /* Change to your desired color */
+    text-decoration: none; /* Remove underline if needed */
+}
+
+h1 a:hover {
+    color: blue; /* Change color on hover if desired */
+}
+
+.logo {
+    width: 40px; /* Adjust size as needed */
+    height: auto;
+    vertical-align: middle; /* Aligns the logo with the text */
+    margin-right: 10px; /* Space between the logo and text */
+}
+
+
+
+
+
+
+
+
+
+
+  

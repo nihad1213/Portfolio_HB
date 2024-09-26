@@ -1,0 +1,57 @@
+{% include 'header.html' %}
+
+<main>
+    <div class="main-container">
+        <h1 class="title">Register</h1>
+        <p class="description">Create your account by filling in the details below.</p>
+
+        <div class="flash-messages">
+            <!-- Add flash message like if it is important -->
+        </div>
+
+        <form action="/register" method="POST">
+            <div class="form-group">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" name="name" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="surname" class="form-label">Surname:</label>
+                <input type="text" id="surname" name="surname" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" name="username" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password" class="form-label">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate" class="form-label">Birth Date:</label>
+                <input type="date" id="birthdate" name="birthdate" class="form-input" required>
+            </div>
+
+            <button type="submit" class="form-button">Register</button>
+        </form>
+
+        <p class="description" style="text-align: center; margin-top: 20px;">
+            Have an account? <a href="/login" style="color: #007bff;">Click here to log in</a>.
+        </p>
+    </div>
+</main>
+
+{% include 'footer.html' %}
