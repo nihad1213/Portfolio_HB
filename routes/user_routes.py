@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# Importing important modules
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 
 
