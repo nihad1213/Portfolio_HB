@@ -105,6 +105,16 @@ body {
     margin-top: 5px;
 }
 
+.phone-link {
+    color: white;
+    text-decoration: none;
+}
+
+.phone-link:hover {
+    color: #ccc;
+}
+
+
 /* Flash message part starts*/
 .flash-messages {
     margin-bottom: 20px;

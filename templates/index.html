@@ -1,5 +1,7 @@
-{% include "header.html" %}
+{% extends "layouts/base.html" %}
 
+{% block content %}
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h2>Welcome to the Event App</h2>
@@ -8,6 +10,7 @@
         </div>
     </section>
 
+    <!-- Filter Section -->
     <div class="mb-5">
         <div class="row align-items-center">
             <div class="col-sm mb-3 mb-sm-0">
@@ -27,9 +30,11 @@
         </div>
     </div>
 
+    <!-- Featured Events Section -->
     <section class="featured-events">
         <h2>Featured Events</h2>
 
+        <!-- Event 1 -->
         <div class="event-card" data-date="2024-09-15">
             <div class="event-image">
                 <img src="https://i.imgur.com/bh1CStD.png" alt="Event 1">
@@ -53,6 +58,7 @@
             </div>
         </div>
 
+        <!-- Event 2 -->
         <div class="event-card" data-date="2024-10-10">
             <div class="event-image">
                 <img src="https://i.imgur.com/bh1CStD.png" alt="Event 2">
@@ -70,5 +76,4 @@
             </div>
         </div>
     </section>
-
-{% include "footer.html" %}
+{% endblock %}
