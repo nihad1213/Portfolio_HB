@@ -17,35 +17,35 @@ def get_current_year():
 # Routes and Functions
 @footerRoutes.route('/festivals')
 def festivals():
-    return render_template('festivals.html', current_year=get_current_year())
+    return render_template('footer-links/festivals.html', current_year=get_current_year())
 
 @footerRoutes.route('/concerts')
 def concerts():
-    return render_template('concerts.html', current_year=get_current_year())
+    return render_template('footer-links/concerts.html', current_year=get_current_year())
 
 @footerRoutes.route('/cultural')
 def cultural():
-    return render_template('cultural.html', current_year=get_current_year())
+    return render_template('footer-links/cultural.html', current_year=get_current_year())
 
 @footerRoutes.route('/workshops')
 def workshops():
-    return render_template('workshops.html', current_year=get_current_year())
+    return render_template('footer-links/workshops.html', current_year=get_current_year())
 
 @footerRoutes.route('/about-us')
 def about():
-    return render_template('about-us.html', current_year=get_current_year())
+    return render_template('footer-links/about-us.html', current_year=get_current_year())
 
 @footerRoutes.route('/story')
 def story():
-    return render_template('story.html', current_year=get_current_year())
+    return render_template('footer-links/story.html', current_year=get_current_year())
 
 @footerRoutes.route('/contact-us')
 def contact():
-    return render_template('contact-us.html', current_year=get_current_year())
+    return render_template('footer-links/contact-us.html', current_year=get_current_year())
 
 @footerRoutes.route('/faqs')
 def faqs():
-    return render_template('faqs.html', current_year=get_current_year())
+    return render_template('footer-links/faqs.html', current_year=get_current_year())
 
 @footerRoutes.route('/submit-contact', methods=['POST'])
 def submit_contact():
