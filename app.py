@@ -42,6 +42,12 @@ mail = Mail(app)
 
 # Importing Models
 from models.User import User
+from models.Admin import Admin
+from models.Attendance import Attendance
+from models.Category import Category
+from models.Chat import Chat
+from models.Event import Event
+from models.Ticket import Ticket
 
 # Importing Routes
 from routes.footer_routes import footerRoutes, get_current_year
