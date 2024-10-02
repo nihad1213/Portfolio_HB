@@ -9,6 +9,9 @@ from flask_mail import Mail
 from datetime import datetime
 from dotenv import load_dotenv
 from db import db
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from datetime import timedelta
+from routes.user_routes import userRoutes, dashboardRoutes
 
 # Load the .env file
 load_dotenv()
@@ -16,6 +19,11 @@ load_dotenv()
 # Create flask app
 app = Flask(__name__)
 
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)  
+
+# Initialize JWT Manager
+jwt = JWTManager(app)
 # Database Config
 DATABASE_TYPE = os.getenv('DATABASE_TYPE')
 DATABASE_USER_NAME = os.getenv('DATABASE_USER_NAME')
@@ -58,6 +66,7 @@ from routes.header_routes import headerRoutes
 app.register_blueprint(footerRoutes)
 app.register_blueprint(userRoutes)
 app.register_blueprint(headerRoutes)
+app.register_blueprint(dashboardRoutes)
 
 # Route for index
 @app.route('/')
