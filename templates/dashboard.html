@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    {% import "header.html" %}
+    <h1>Welcome to your Dashboard, {{ user.name }}!</h1>
+
+    <div>
+        <h2>User Information</h2>
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Surname:</strong> {{ user.surname }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Attend:</strong> {{ user.attend }}</p>
+        <p><strong>Created At:</strong> {{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        <p><strong>Updated At:</strong> {{ user.updated_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    </div>
+
+    <div>
+        <a href="{{ url_for('user_routes.logout') }}">Logout</a>
+    </div>
+</body>
+</html>
