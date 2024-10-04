@@ -1,6 +1,6 @@
-{% include 'header.html' %}
+{% extends "layouts/base.html" %}
 
-<main>
+{% block content %}
     <div class="main-container">
         <h1 class="title">Register</h1>
         <p class="description">Create your account by filling in the details below.</p>
@@ -54,4 +54,4 @@
     </div>
 </main>
 
-{% include 'footer.html' %}
+{% endblock %}
