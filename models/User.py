@@ -7,14 +7,11 @@ from datetime import datetime
 class User(BaseModel):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)  # Add a primary key column
     name = Column(String(100), nullable=False)
     surname = Column(String(100), nullable=False)
     password = Column(String(255), nullable=False)
     email = Column(String(150), nullable=False, unique=True)
     attend = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, name, surname, password, email, attend=False):
         self.name = name

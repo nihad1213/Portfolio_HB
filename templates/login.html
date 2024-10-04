@@ -1,6 +1,6 @@
-{% include 'header.html' %}
+{% extends "layouts/base.html" %}
 
-<main>
+{% block content %}
     <div class="main-container">
         <h1 class="title">Login</h1>
         <p class="description">Please enter your email and password to log in.</p>
@@ -39,4 +39,4 @@
     {% endwith %}
 </main>
 
-{% include 'footer.html' %}
+{% endblock %}

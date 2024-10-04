@@ -7,8 +7,8 @@ mainRoutes = Blueprint('main_routes', __name__)
 
 @mainRoutes.route('/create-event')
 def create_event():
-    return render_template('create-event.html')
+    return render_template('main/create-event.html')
 
-@mainRoutes.route('/events')
+@mainRoutes.route('/eventss')
 def events():
-    return render_template('events.html')
+    return render_template('main/events.html')
