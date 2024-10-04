@@ -61,12 +61,14 @@ from models.Ticket import Ticket
 from routes.footer_routes import footerRoutes, get_current_year
 from routes.user_routes import userRoutes
 from routes.header_routes import headerRoutes
+from routes.main_routes import mainRoutes
 
 # Registering blueprints
 app.register_blueprint(footerRoutes)
 app.register_blueprint(userRoutes)
 app.register_blueprint(headerRoutes)
 app.register_blueprint(dashboardRoutes)
+app.register_blueprint(mainRoutes)
 
 # Route for index
 @app.route('/')

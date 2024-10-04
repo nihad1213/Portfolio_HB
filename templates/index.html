@@ -5,10 +5,11 @@
     <section class="hero">
         <div class="hero-content">
             <h2>Welcome to the Event App</h2>
-            <button onclick="window.location.href='events.html'">See Events</button>
-            <button onclick="window.location.href='create-event.html'">Create Event</button>
+            <button onclick="window.location.href='{{ url_for('main_routes.events') }}'">See Events</button>
+            <button onclick="window.location.href='{{ url_for('main_routes.create_event') }}'">Create Event</button>
         </div>
     </section>
+    
 
     <!-- Filter Section -->
     <div class="mb-5">

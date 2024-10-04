@@ -1,4 +1,4 @@
-#!/home/muhammedsultanov/Portfolio_HB/venv/bin/python3
+#!/media/nihad/5d35da89-da35-4790-aefa-7336d15b92eb/Portfolio_HB/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
