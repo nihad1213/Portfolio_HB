@@ -6,7 +6,13 @@
         <p class="description">Please enter your email and password to log in.</p>
 
         <div class="flash-messages">
-            <!-- Add flash message like if it is important -->
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         </div>
 
         <form action="/login" method="POST"> <!-- Change the action URL as per your routing -->
@@ -27,16 +33,4 @@
             Don’t have an account? <a href="/register" style="color: #007bff;">Click here to register</a>.
         </p>
     </div>
-        <!-- Flash messages for feedback -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-</main>
-
 {% endblock %}
