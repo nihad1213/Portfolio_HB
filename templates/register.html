@@ -6,7 +6,15 @@
         <p class="description">Create your account by filling in the details below.</p>
 
         <div class="flash-messages">
-            <!-- Add flash message like if it is important -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flash-messages-list">
+                        {% for message in messages %}
+                            <li class="flash-message">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
         </div>
 
         <form action="/register" method="POST">
@@ -52,6 +60,4 @@
             Have an account? <a href="/login" style="color: #007bff;">Click here to log in</a>.
         </p>
     </div>
-</main>
-
 {% endblock %}

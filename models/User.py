@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean
 from models.BaseModel import BaseModel, db  # Ensure db is correctly imported for sessions
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
 
-class User(BaseModel):
+class User(BaseModel, db.Model):  # Inherit from db.Model to use SQLAlchemy ORM
     __tablename__ = 'users'
 
+    id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     surname = Column(String(100), nullable=False)
     password = Column(String(255), nullable=False)
@@ -23,7 +23,7 @@ class User(BaseModel):
     @classmethod
     def find_by_email(cls, email):
         """Query a user by their email."""
-        return db.session.query(cls).filter_by(email=email).first()
+        return cls.query.filter_by(email=email).first()
 
     def check_password(self, password):
         """Check if the provided password matches the hashed password."""
@@ -31,7 +31,7 @@ class User(BaseModel):
 
     def save(self):
         """Insert or update the user in the database."""
-        db.session.add(self)  # Use the db session directly
+        db.session.add(self)
         db.session.commit()
 
     def __repr__(self):
