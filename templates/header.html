@@ -5,10 +5,13 @@
         <nav>
             <a href="/">Home</a>
             <a href="/schedule"><i class="far fa-calendar-alt"></i> Schedule</a>
-            <a href="/profile">Me</a>
-            <a href="/events"><i class="far fa-bookmark"></i>Saved Events</a>
+            {% if session.user_id %}
+                <a href="/profile">Me</a>
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+            <a href="/events"><i class="far fa-bookmark"></i> Saved Events</a>
             <a href="/chat"><i class="fas fa-comments"></i> Chat</a>
-            <a href="/login">Login</a>
         </nav>
     </div>
 </header>

@@ -24,6 +24,7 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 # Initialize JWT Manager
 jwt = JWTManager(app)
+
 # Database Config
 DATABASE_TYPE = os.getenv('DATABASE_TYPE')
 DATABASE_USER_NAME = os.getenv('DATABASE_USER_NAME')
