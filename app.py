@@ -13,6 +13,8 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token, ge
 from datetime import timedelta
 from routes.user_routes import userRoutes, dashboardRoutes
 
+
+
 # Load the .env file
 load_dotenv()
 
@@ -24,15 +26,14 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 # Initialize JWT Manager
 jwt = JWTManager(app)
-
 # Database Config
-DATABASE_TYPE = os.getenv('DATABASE_TYPE')
-DATABASE_USER_NAME = os.getenv('DATABASE_USER_NAME')
-DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
-DATABASE_NAME = os.getenv('DATABASE_NAME')
+DATABASE_TYPE = "MySQL"
+DATABASE_USER_NAME = "root"
+DATABASE_PASSWORD = "new_password"
+DATABASE_NAME = "azebaijanfest"
 
 # Database URI
-app.config['SQLALCHEMY_DATABASE_URI'] = f"{DATABASE_TYPE}://{DATABASE_USER_NAME}:{DATABASE_PASSWORD}@localhost:3306/{DATABASE_NAME}"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:new_password@localhost:3306/azebaijanfest'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)

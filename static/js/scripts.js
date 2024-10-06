@@ -132,6 +132,113 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+const categoryContainer = document.querySelector('.category-container');
+let startX;
+let currentTranslate = 0;
+
+categoryContainer.addEventListener('touchstart', (event) => {
+    startX = event.touches[0].clientX; // Store the starting position
+});
+
+categoryContainer.addEventListener('touchmove', (event) => {
+    const currentX = event.touches[0].clientX;
+    const difference = currentX - startX; // Calculate the distance moved
+    currentTranslate = difference; // Update the translation
+    categoryContainer.style.transform = `translateX(${currentTranslate}px)`; // Move the container
+});
+
+categoryContainer.addEventListener('touchend', () => {
+    // Optionally, add logic to snap to the nearest card
+    currentTranslate = 0; // Reset translation
+    categoryContainer.style.transform = `translateX(0px)`; // Reset position
+});
+
+// Profile Page JavaScript
+
+function loadProfileImage(event) {
+    const image = document.getElementById('profileImage');
+    const file = event.target.files[0];
+
+    if (file) {
+        const imageURL = URL.createObjectURL(file);
+        image.src = imageURL;
+    }
+}
+
+// Handle form submission
+document.getElementById('profileForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const description = document.getElementById('description').value;
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const oldPassword = document.getElementById('oldPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+
+    // Here you can send this data to your server using AJAX or fetch
+    console.log({
+        firstName,
+        lastName,
+        description,
+        phoneNumber,
+        oldPassword,
+        newPassword
+    });
+
+    alert('Profile updated!');
+});
+
+function saveEvent(event) {
+    const eventCard = event.target.closest('.event-card');
+    const eventDate = eventCard.getAttribute('data-date');
+    const eventName = eventCard.querySelector('h3').innerText;
+    
+    // Example: creating an object to save
+    const savedEvent = {
+        name: eventName,
+        date: eventDate,
+    };
+    
+    // Save to local storage or implement your own save logic
+    const savedEvents = JSON.parse(localStorage.getItem('savedEvents')) || [];
+    savedEvents.push(savedEvent);
+    localStorage.setItem('savedEvents', JSON.stringify(savedEvents));
+    
+    // Optional feedback
+    alert(`Event "${eventName}" has been saved!`);
+}
+
+
+function attendEvent(event) {
+    const eventCard = event.target.closest('.event-card');
+    const eventName = eventCard.querySelector('h3').innerText;
+    const attendanceStatus = eventCard.querySelector('.attendance-status');
+
+    // Update the attendance status
+    attendanceStatus.innerText = `You are attending "${eventName}"!`;
+
+    // Optional: You might also want to persist this state
+    console.log(`User has confirmed attendance for: ${eventName}`);
+}
+function likeEvent(event) {
+    const likeButton = event.target.closest('.like-button');
+    const likeCountElement = likeButton.querySelector('.like-count');
+    
+    // Parse current like count and increment it
+    let currentCount = parseInt(likeCountElement.innerText);
+    currentCount++;
+    
+    // Update the displayed like count
+    likeCountElement.innerText = currentCount;
+
+    // Optional: Add logic to persist likes (local storage, server, etc.)
+    // For demonstration, you could log the updated count
+    console.log(`Event liked! New count: ${currentCount}`);
+}
+
+
+
 
 
 
