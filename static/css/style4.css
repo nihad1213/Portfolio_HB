@@ -7,11 +7,11 @@ body,html{
 }
 
 .chat{
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .card{
-    height: 500px;
+    height: 1000px;
     border-radius: 15px !important;
     background-color: rgba(0,0,0,0.4) !important;
 }
@@ -174,7 +174,7 @@ font-size: 10px;
 position: absolute;
 right:0;
 bottom: -15px;
-color: rgba(255,255,255,0.5);
+color: rgba(255, 255, 255, 0.5);
 font-size: 10px;
 }
 .msg_head{
@@ -221,4 +221,55 @@ background-color: rgba(0,0,0,0.2);
 .contacts_card{
 margin-bottom: 15px !important;
 }
+}
+
+
+.categories {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 0; /* Move section closer to the top */
+    padding-top: 0; /* Remove any unnecessary padding */
+}	
+
+
+.category-container {
+    display: flex; /* Align cards in a row */
+    transition: transform 0.3s ease; /* Smooth transition */
+    will-change: transform; /* Optimize for animations */
+	gap: 5px;
+}
+
+.category-card {
+    min-width: 60px; /* Fixed width for cards */
+     /* Space between cards */
+    cursor: pointer; /* Pointer on hover */
+	margin:0 5px;
+	
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .category-card {
+        min-width: 150px; /* Adjust width for smaller screens */
+    }
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+}
+
+.category-card img {
+    width: 80%;
+    height: 100px;
+    object-fit: cover;
+	margin: 1px;
+}
+
+.category-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.category-info h3 {
+    color: #333;
 }
