@@ -25,7 +25,7 @@ def login():
         if user_obj and user_obj.check_password(password):
             session['user_id'] = user_obj.id
             flash('Logged in successfully!', 'success')
-            return redirect(url_for('dashboard_routes.dashboard'))
+            return redirect(url_for('index'))
         else:
             flash('Username/Email or password is incorrect', 'error')
 
@@ -90,3 +90,9 @@ def dashboard():
     }
 
     return render_template('dashboard.html', user=user_data)
+
+@userRoutes.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('index'))
