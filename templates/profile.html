@@ -1,41 +1,55 @@
 {% extends "layouts/base.html" %}
-
 {% block content %}
+
 <div class="container mt-5">
     <div class="profile-container text-center">
-        <h2>Update Profile</h2>
-        
-        <div class="profile-pic mb-4">
-            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture" class="img-fluid rounded-circle">
-            <label for="profilePicInput" class="btn btn-outline-secondary mt-2">
-                <i class="fas fa-camera"></i> Change Profile Picture
-            </label>
-            <input type="file" id="profilePicInput" accept="image/*" onchange="loadProfileImage(event)" style="display: none;">
-        </div>
+        <h2 class="mb-4">Update Profile</h2>
 
-        <form id="profileForm" method="POST" class="mb-4">
-            <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" placeholder="Enter a short bio about yourself" class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" class="form-control">
+        <form method="POST" enctype="multipart/form-data" class="border p-4 shadow-sm rounded bg-light">
+            <div class="profile-pic mb-4">
+                <img src="{{ url_for('static', filename=user.profile_image) if user.profile_image else 'https://via.placeholder.com/150' }}" 
+                     id="profileImage" class="img-fluid rounded-circle border border-primary" alt="Profile Picture">
+                <p class="mt-2 font-weight-bold">Change Profile Picture</p>
+
+                <!-- Select Image Button -->
+                <div class="mt-2">
+                    <input type="file" id="profilePicInput" name="profilePicInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                    <label for="profilePicInput" class="btn btn-secondary">Select Image</label>
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Profile</button>
+            <div class="form-group">
+                <label for="firstName" class="font-weight-bold">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" value="{{ user.name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName" class="font-weight-bold">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" value="{{ user.surname }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="font-weight-bold">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ user.description }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber" class="font-weight-bold">Phone Number:</label>
+                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="{{ user.phone_number }}">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-3">Update Profile</button>
         </form>
-        
-        <!-- Button to navigate to the Change Password page -->
-        <a href="/change_password" class="btn btn-secondary">Change Password</a>
+
+        <a href="#" class="btn btn-secondary mt-3">Change Password</a>
     </div>
 </div>
+
+<script>
+function previewImage(event) {
+    const image = document.getElementById('profileImage');
+    image.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
+
 {% endblock %}
