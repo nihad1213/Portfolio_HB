@@ -39,6 +39,10 @@ class User(BaseModel):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    def set_password(self, new_password):
+        """Set a new password for the user."""
+        self.password = generate_password_hash(new_password)
+    
     def save(self):
         db.session.add(self)
         db.session.commit()
