@@ -1,0 +1,55 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="profile-container text-center">
+        <h2 class="mb-4">Update Profile</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="border p-4 shadow-sm rounded bg-light">
+            <div class="profile-pic mb-4">
+                <img src="{{ url_for('static', filename=user.profile_image) if user.profile_image else 'https://via.placeholder.com/150' }}" 
+                     id="profileImage" class="img-fluid rounded-circle border border-primary" alt="Profile Picture">
+                <p class="mt-2 font-weight-bold">Change Profile Picture</p>
+
+                <!-- Select Image Button -->
+                <div class="mt-2">
+                    <input type="file" id="profilePicInput" name="profilePicInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                    <label for="profilePicInput" class="btn btn-secondary">Select Image</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName" class="font-weight-bold">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" value="{{ user.name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName" class="font-weight-bold">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" value="{{ user.surname }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="font-weight-bold">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ user.description }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber" class="font-weight-bold">Phone Number:</label>
+                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="{{ user.phone_number }}">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-3">Update Profile</button>
+        </form>
+
+        <a href="#" class="btn btn-secondary mt-3">Change Password</a>
+    </div>
+</div>
+
+<script>
+function previewImage(event) {
+    const image = document.getElementById('profileImage');
+    image.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
+
+{% endblock %}
