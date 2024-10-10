@@ -57,6 +57,7 @@ from models.Category import Category
 from models.Chat import Chat
 from models.Event import Event
 from models.Ticket import Ticket
+from models.Subscriber import Subscribers
 
 # Importing Routes
 from routes.footer_routes import footerRoutes, get_current_year
