@@ -2,8 +2,6 @@
 
 {% block content %}
 <body>	
-    
-    
 	<div class="section-center">
 		<div class="section-up">
 			<div class="sun">
@@ -388,9 +386,7 @@
 
 </body>
 
-
 <!-- Categories Section -->
-
 
 <!-- Filter Section -->
 
@@ -463,5 +459,27 @@
 	</div>
 	
 	
+</section>
+
+<section>
+    <div class="become-subscriber">
+        <div class="subscriber-header">
+           <h2>Stay Updated on Events</h2>
+        </div>
+
+        <div class="subscriber-paragraph">
+           <p>
+              Signup to get <strong>EXCLUSIVE</strong> updates on upcoming events, workshops, and special offers!
+           </p>
+        </div>
+
+        <div class="subsriber-input">
+			<form method="POST" action="{{ url_for('main_routes.subscribe') }}">
+				<span><i class="fa-solid fa-envelope"></i></span>
+				<input type="email" name="email" placeholder="Enter your email" required>
+				<button type="submit" name="submit"><i class="fa-brands fa-telegram"></i></button>
+			 </form>
+        </div>
+     </div>
 </section>
 {% endblock %}
