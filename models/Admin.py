@@ -8,10 +8,12 @@ class Admin(BaseModel):
     __tablename__ = 'admins'
 
     username = Column(String(100), nullable=False, unique=True)
+    email = Column(String(100), nullable=False, unique=True)
     password_hash = Column(String(255), nullable=False)
 
-    def __init__(self, username, password):
+    def __init__(self, username, email, password):
         self.username = username
+        self.email = email
         self.set_password(password)
 
     def set_password(self, password):
@@ -23,4 +25,4 @@ class Admin(BaseModel):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f"<Admin(username='{self.username}')>"
+        return f"<Admin(username='{self.username}', email='{self.email}')>"

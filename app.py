@@ -58,18 +58,20 @@ from models.Subscriber import Subscribers
 
 # Importing Routes
 from routes.footer_routes import footerRoutes, get_current_year
-from routes.user_routes import userRoutes, dashboardRoutes  # Add the missing dashboardRoutes import
+from routes.user_routes import userRoutes, dashboardRoutes
 from routes.header_routes import headerRoutes
 from routes.main_routes import mainRoutes
 from routes.profile_routes import profileRoutes
+from routes.admin_routes import adminRoutes
 
 # Registering blueprints
 app.register_blueprint(footerRoutes)
 app.register_blueprint(userRoutes)
 app.register_blueprint(headerRoutes)
-app.register_blueprint(dashboardRoutes)  # Now dashboardRoutes is defined
+app.register_blueprint(dashboardRoutes)
 app.register_blueprint(mainRoutes)
 app.register_blueprint(profileRoutes)
+app.register_blueprint(adminRoutes)
 
 # Route for index
 @app.route('/')
@@ -81,16 +83,18 @@ if __name__ == "__main__":
         db.create_all()
 
         # Check if the admin already exists
-        admin_email = "admin@admin.com"
-        admin_password = "adminpassword"
-        admin = Admin.query.filter_by(username=admin_email).first()
+        admin_username = "admin"
+        admin_email = "admin@fest.com"
+        admin_password = "admin"
+
+        admin = Admin.query.filter_by(username=admin_username).first()
 
         if not admin:
             # Create a new admin with automatic password hashing
-            new_admin = Admin(username=admin_email, password=admin_password)
+            new_admin = Admin(username=admin_username, email=admin_email, password=admin_password)
             new_admin.save()
-            print(f"Admin user {admin_email} created successfully.")
+            print(f"Admin user {admin_username} created successfully.")
         else:
-            print(f"Admin user {admin_email} already exists.")
+            print(f"Admin user {admin_username} already exists.")
 
     app.run(host="0.0.0.0", port=8000, debug=True)
