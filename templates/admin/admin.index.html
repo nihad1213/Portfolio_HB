@@ -12,11 +12,21 @@
  
 <body>
     <div class="container login-container">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="login-box">
                     <h1 class="text-center"><strong>Admin Login</strong></h1>
-                    <form action="" method="post">
+                    <form action="{{ url_for('admin_routes.admin_index') }}" method="post">
                         <div class="textbox">
                             <div class="input-group">
                                 <div class="input-group-prepend">
