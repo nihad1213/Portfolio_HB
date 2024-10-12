@@ -12,18 +12,26 @@
 				<span></span>
 				<span></span>
 			</div>
-            <section class="hero">
-                <div class="hero-content">
-                    <h2>Welcome to the Event App</h2>
-                    <a href="{{ url_for('main_routes.events') }}">
-                        <button>See Events</button>
-                    </a>
-                    <a href="{{ url_for('main_routes.create_event') }}">
-                        <button>Create Event</button>
-                    </a>
-                </div>
-            </section>
-            
+			<section class="hero">
+				<div class="hero-content">
+					<h2>Welcome to the Event App</h2>
+					<a href="{{ url_for('main_routes.events') }}">
+						<button>See Events</button>
+					</a>
+					
+					{% if session['user_id'] %}
+						<!-- If user is logged in, allow access to create event -->
+						<a href="{{ url_for('main_routes.create_event') }}">
+							<button>Create Event</button>
+						</a>
+					{% else %}
+						<!-- If user is not logged in, alert them to log in -->
+						<a href="#" onclick="alert('Please log in to create an event!'); window.location.href='{{ url_for('user_routes.login') }}';">
+							<button>Create Event</button>
+						</a>
+					{% endif %}
+				</div>
+			</section>            
 			<div class="cloud-middle">
 				<span></span>
 				<span></span>

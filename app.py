@@ -2,16 +2,14 @@
 
 # Importing modules
 from flask import Flask, render_template
-import secrets
 from flask_mysqldb import MySQL
 import os
 from flask_mail import Mail
-from datetime import datetime
+from datetime import timedelta
 from dotenv import load_dotenv
 from db import db
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
-from datetime import timedelta
-from routes.user_routes import userRoutes, dashboardRoutes
+from flask_jwt_extended import JWTManager
+from models.Admin import Admin  # Import the Admin model
 
 # Load the .env file
 load_dotenv()
@@ -20,7 +18,7 @@ load_dotenv()
 app = Flask(__name__)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)  
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 # Initialize JWT Manager
 jwt = JWTManager(app)
@@ -51,7 +49,6 @@ mail = Mail(app)
 
 # Importing Models
 from models.User import User
-from models.Admin import Admin
 from models.Attendance import Attendance
 from models.Category import Category
 from models.Chat import Chat
@@ -61,10 +58,11 @@ from models.Subscriber import Subscribers
 
 # Importing Routes
 from routes.footer_routes import footerRoutes, get_current_year
-from routes.user_routes import userRoutes
+from routes.user_routes import userRoutes, dashboardRoutes
 from routes.header_routes import headerRoutes
 from routes.main_routes import mainRoutes
 from routes.profile_routes import profileRoutes
+from routes.admin_routes import adminRoutes
 
 # Registering blueprints
 app.register_blueprint(footerRoutes)
@@ -73,6 +71,7 @@ app.register_blueprint(headerRoutes)
 app.register_blueprint(dashboardRoutes)
 app.register_blueprint(mainRoutes)
 app.register_blueprint(profileRoutes)
+app.register_blueprint(adminRoutes)
 
 # Route for index
 @app.route('/')
@@ -82,5 +81,20 @@ def index():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+
+        # Check if the admin already exists
+        admin_username = "admin"
+        admin_email = "admin@fest.com"
+        admin_password = "admin"
+
+        admin = Admin.query.filter_by(username=admin_username).first()
+
+        if not admin:
+            # Create a new admin with automatic password hashing
+            new_admin = Admin(username=admin_username, email=admin_email, password=admin_password)
+            new_admin.save()
+            print(f"Admin user {admin_username} created successfully.")
+        else:
+            print(f"Admin user {admin_username} already exists.")
 
     app.run(host="0.0.0.0", port=8000, debug=True)
