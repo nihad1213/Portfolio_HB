@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex">
+
+    <!-- Sidebar -->
+    <div class="w-64 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="p-4 text-xl font-semibold">Admin Panel</div>
+        <nav class="flex-1 px-4">
+            <a href="#" class="block py-2 px-3 rounded hover:bg-gray-700">Dashboard</a>
+            <a href="#" class="block py-2 px-3 rounded hover:bg-gray-700">Admin</a>
+            <a href="#" class="block py-2 px-3 rounded hover:bg-gray-700">Events</a>
+            <a href="#" class="block py-2 px-3 rounded hover:bg-gray-700">Settings</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1">
+        <!-- Navbar -->
+        <nav class="bg-white shadow-md px-4 py-4 flex justify-between items-center">
+            <div class="text-lg">Welcome, Admin</div>
+            <div class="relative">
+                <!-- User Dropdown -->
+                <button class="flex items-center space-x-2 focus:outline-none" id="userMenuButton">
+                    <span>User</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                    </svg>
+                </button>
+                <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="p-6">
+            {% block content %}
+            <!-- Specific page content goes here -->
+            {% endblock %}
+        </div>
+    </div>
+
+    <script>
+        // User dropdown toggle logic
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userMenu = document.getElementById('userMenu');
+        
+        userMenuButton.addEventListener('click', () => {
+            userMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
