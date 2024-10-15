@@ -39,6 +39,21 @@
         </form>
 
         <a href="{{ url_for('profile_routes.password_reset') }}" class="btn btn-secondary mt-3">Change Password</a>
+
+        <div class="subscription-container mt-5">
+            <h4 class="mb-3">Subscription Status</h4>
+            {% if user.is_subscribed %}
+                <p>You are currently subscribed to our newsletters.</p>
+                <form action="{{ url_for('profile_routes.unsubscribe', user_id=user.id) }}" method="POST">
+                    <button type="submit" class="btn btn-danger">Unsubscribe</button>
+                </form>
+            {% else %}
+                <p>You are not subscribed to our newsletters.</p>
+                <form action="{{ url_for('profile_routes.subscribe', user_id=user.id) }}" method="POST">
+                    <button type="submit" class="btn btn-success">Subscribe</button>
+                </form>
+            {% endif %}
+        </div>
     </div>
 </div>
 

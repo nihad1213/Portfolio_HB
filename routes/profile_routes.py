@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from models.User import User, db
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
+from models.Subscriber import Subscribers 
 import os
 import logging
 from dotenv import load_dotenv
@@ -149,3 +150,47 @@ def reset_with_token(token):
             return redirect(url_for('user_routes.login'))  # Correctly redirect to the login page
 
     return render_template('profile/reset_password.html', token=token)
+
+@profileRoutes.route('/subscribe/<user_id>', methods=['POST'])
+def subscribe(user_id):
+    user = db.session.query(User).filter_by(id=user_id).first()
+    if user:
+        user.is_subscribed = True 
+
+        # Add user email to the Subscribers table
+        if user.email:
+            new_subscriber = Subscribers(email=user.email)
+            db.session.add(new_subscriber)
+            db.session.commit()
+            flash('You have successfully subscribed!', 'success')
+        else:
+            flash('User does not have an email address.', 'danger')
+    else:
+        flash('User not found!', 'danger')
+
+    return redirect(url_for('profile_routes.profile', user_id=user.id))
+
+@profileRoutes.route('/unsubscribe/<user_id>', methods=['POST'])
+def unsubscribe(user_id):
+    user = db.session.query(User).filter_by(id=user_id).first()
+    if user:
+        user.is_subscribed = False 
+        
+        # Remove user email from the Subscribers table
+        if user.email:
+            subscriber = db.session.query(Subscribers).filter_by(email=user.email).first()
+            if subscriber:
+                db.session.delete(subscriber)
+                db.session.commit()
+                flash('You have successfully unsubscribed!', 'success')
+            else:
+                flash('You were not subscribed!', 'info')
+        else:
+            flash('User does not have an email address.', 'danger')
+
+        # Optionally commit the user status change if you want to update it too
+        db.session.commit()
+    else:
+        flash('User not found!', 'danger')
+
+    return redirect(url_for('profile_routes.profile', user_id=user.id))
