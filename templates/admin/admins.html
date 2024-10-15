@@ -1,0 +1,38 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Admin List{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-semibold">Admins</h1>
+    <form method="POST" action="{{ url_for('admin_routes.add_admin') }}" class="flex space-x-2">
+        <input type="text" name="username" placeholder="Username" required class="border p-2" />
+        <input type="email" name="email" placeholder="Email" required class="border p-2" />
+        <input type="password" name="password" placeholder="Password" required class="border p-2" />
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Admin</button>
+    </form>    
+</div>
+
+<table class="table-auto w-full border-collapse">
+    <thead>
+        <tr class="bg-gray-200 text-left">
+            <th class="px-4 py-2">Username</th>
+            <th class="px-4 py-2">Email</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for admin in admins %}
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-3">{{ admin.username }}</td>
+            <td class="px-4 py-3">{{ admin.email }}</td>
+            <td class="px-4 py-3">
+                <!-- Action buttons -->
+                <a href="{{ url_for('admin_routes.edit_admin', admin_id=admin.id) }}" class="bg-yellow-500 text-white px-3 py-1 rounded mr-2">Edit</a>
+                <a href="{{ url_for('admin_routes.delete_admin', admin_id=admin.id) }}" class="bg-red-500 text-white px-3 py-1 rounded">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
