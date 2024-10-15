@@ -1,0 +1,20 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Send Message{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Send Message to Subscribers</h1>
+
+<form method="POST" action="{{ url_for('admin_routes.send_message') }}">
+    <div class="mb-4">
+        <label for="subject" class="block text-gray-700">Subject</label>
+        <input type="text" id="subject" name="subject" class="border p-2 w-full" required />
+    </div>
+    
+    <div class="mb-4">
+        <label for="message" class="block text-gray-700">Message</label>
+        <textarea id="message" name="message" class="border p-2 w-full" required></textarea>
+    </div>
+    
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Send Message</button>
+</form>
+{% endblock %}
