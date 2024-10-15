@@ -1,11 +1,16 @@
 #!/usr/bin/python3
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+from flask_mail import Message, Mail
 from models.Admin import Admin
+from models.Subscriber import Subscribers
 from db import db
 
 # Create blueprint
 adminRoutes = Blueprint('admin_routes', __name__)
+
+# Intialze mail
+mail = Mail()
 
 # Get admin login part
 @adminRoutes.route('/admin', methods=['GET', 'POST'])
@@ -72,6 +77,7 @@ def admin_list():
     admins = Admin.query.all()
     return render_template('admin/admins.html', admins=admins)
 
+# Edit admin
 @adminRoutes.route('/admin/edit/<string:admin_id>', methods=['GET', 'POST'])
 def edit_admin(admin_id):
     admin = Admin.query.get(admin_id)
@@ -96,8 +102,6 @@ def edit_admin(admin_id):
 
     return render_template('admin/edit-admin.html', admin=admin)
 
-
-
 # Delete admin confirmation page
 @adminRoutes.route('/admin/delete/<string:admin_id>', methods=['GET'])
 def delete_admin(admin_id):
@@ -112,3 +116,35 @@ def confirm_delete_admin(admin_id):
     db.session.commit()
     flash('Admin deleted successfully!', 'success')
     return redirect(url_for('admin_routes.admin_list'))
+
+# Send message to subscribers
+@adminRoutes.route('/send-message', methods=['GET', 'POST'])
+def send_message():
+    if request.method == 'POST':
+        subject = request.form['subject']
+        message = request.form['message']
+        
+        default_sender = current_app.config['MAIL_DEFAULT_SENDER']
+        subscribers = db.session.query(Subscribers).all()
+
+        if not subscribers:
+            flash('No subscribers found!', 'warning')
+            return redirect(url_for('admin_routes.send_message'))
+
+        for subscriber in subscribers:
+            msg = Message(
+                subject=subject,
+                sender=default_sender,
+                recipients=[subscriber.email]
+            )
+            msg.body = f"{message}\n\nThank you for your attention!"
+
+            try:
+                mail.send(msg)
+                flash(f'Email sent to {subscriber.email}', 'success')
+            except Exception as e:
+                flash(f'Error sending message to {subscriber.email}: {e}', 'danger')
+
+        return redirect(url_for('admin_routes.send_message'))
+
+    return render_template('admin/send-message.html')
