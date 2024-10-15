@@ -1,4 +1,4 @@
-/*Common part starts*/
+/* Common part starts */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,7 +6,8 @@ body {
     background-color: #f8f9fa;
 }
 
-.main-container {
+/* Main container for content pages */
+.main-content .main-container {
     max-width: 800px;
     margin: 40px auto;
     padding: 30px;
@@ -15,7 +16,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.title {
+.main-content .title {
     font-size: 2.5em;
     font-weight: bold;
     text-align: center;
@@ -23,43 +24,42 @@ body {
     margin-bottom: 20px;
 }
 
-.description {
+.main-content .description {
     font-size: 1.125em;
     color: #495057;
     line-height: 1.5;
     margin-bottom: 30px;
 }
 
-
-/*Contact us part starts*/
-.main-container {
+/* Contact us part starts */
+.contact-section .main-container {
     padding: 20px;
 }
 
-.title {
+.contact-section .title {
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-.form-group {
+.contact-section .form-group {
     margin-bottom: 15px;
 }
 
-.form-label {
+.contact-section .form-label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-.form-input,
-.form-textarea {
+.contact-section .form-input,
+.contact-section .form-textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.form-button {
+.contact-section .form-button {
     padding: 10px 15px;
     background-color: #007bff;
     color: white;
@@ -68,20 +68,20 @@ body {
     cursor: pointer;
 }
 
-.form-button:hover {
+.contact-section .form-button:hover {
     background-color: #0056b3;
 }
 
-/*FAQ part starts*/
-.faq-container {
+/* FAQ part starts */
+.faq-section .faq-container {
     margin-top: 20px;
 }
 
-.faq-item {
+.faq-section .faq-item {
     margin-bottom: 10px;
 }
 
-.faq-question {
+.faq-section .faq-question {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -93,11 +93,11 @@ body {
     font-size: 16px;
 }
 
-.faq-question:hover {
+.faq-section .faq-question:hover {
     background-color: #0056b3;
 }
 
-.faq-answer {
+.faq-section .faq-answer {
     display: none;
     padding: 10px;
     border: 1px solid #ccc;
@@ -114,8 +114,7 @@ body {
     color: #ccc;
 }
 
-
-/* Flash message part starts*/
+/* Flash message part starts */
 .flash-messages {
     margin-bottom: 20px;
 }
@@ -136,3 +135,112 @@ body {
     color: #721c24;
 }
 
+/* Octocat animation and ocean */
+
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+body {
+  margin: 0;
+}
+
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight:300;
+  letter-spacing: 2px;
+  font-size:48px;
+}
+p {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+  font-size:14px;
+  color: #ffffff;
+}
+
+/*.header {
+  position:relative;
+  text-align:center;
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+}*/
+
+/*.logo {
+  width:50px;
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  padding-right:15px;
+  display:inline-block;
+  vertical-align: middle;
+}*/
+
+.inner-header {
+  height:65vh;
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flex { /*Flexbox for containers*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+waves {
+  position:relative;
+  /*background: linear-gradient(60deg,  #19107f , #19107f);*/
+  width: 100%;
+  height:15vh;
+  margin-bottom:-7px; /*Fix for safari gap*/
+  min-height:100px;
+  max-height:150px;
+}
+
+.content {
+  position:relative;
+  height:7vh;
+  text-align:center;
+  background-color: rgb(255, 255, 255);
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .waves {
+    height:40px;
+    min-height:40px;
+  }
+  .content {
+    height:30vh;
+  }
+  h1 {
+    font-size:24px;
+  }
+}

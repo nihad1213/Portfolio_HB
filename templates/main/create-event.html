@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<section class="create-event-form">
+    <div class="container">
+        <h2>Event Details</h2>
+        <form id="eventForm" enctype="multipart/form-data">
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" name="eventName" required>
+            
+            <label for="eventDescription">Description:</label>
+            <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
+            
+            <label for="eventDate">Date:</label>
+            <input type="date" id="eventDate" name="eventDate" required>
+            
+            <label for="eventTime">Time:</label>
+            <input type="time" id="eventTime" name="eventTime" required>
+            
+            <label for="eventImage">Upload Image:</label>
+            <input type="file" id="eventImage" name="eventImage" accept="image/*">
+
+            <!-- Choose Category Section -->
+            <label for="eventCategory">Choose Category:</label>
+            <select id="eventCategory" name="eventCategory" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="art">Art</option>
+                <option value="sport">Sport</option>
+                <option value="science">Science</option>
+                <option value="other">Other</option>
+            </select>
+
+            <button type="submit">Create Event</button>
+        </form>
+    </div>
+</section>
+
+<script src="scripts.js" defer></script>
+
+{% endblock %}
+

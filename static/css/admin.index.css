@@ -1,0 +1,26 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.login-container {
+    margin-top: 100px;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h1 {
+    margin-bottom: 20px;
+}
+
+.textbox {
+    margin-bottom: 15px;
+}
+
+.button {
+    width: 100%;
+}
