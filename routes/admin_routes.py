@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from models.Admin import Admin  # Import your Admin model
-from db import db  # Import your database session
+from models.Admin import Admin
+from db import db
 
 # Create blueprint
 adminRoutes = Blueprint('admin_routes', __name__)
 
+# Get admin login part
 @adminRoutes.route('/admin', methods=['GET', 'POST'])
 def admin_index():
     if request.method == 'POST':
@@ -19,14 +20,95 @@ def admin_index():
         
         if admin and admin.check_password(password):
             # If the admin exists and the password matches, redirect to dashboard
-            return redirect(url_for('admin_routes.dashboard'))  # Use the correct endpoint here
+            return redirect(url_for('admin_routes.dashboard'))
         else:
             # If not, flash an error message
             flash('Invalid username, email, or password. Please try again.', 'danger')
-            return redirect(url_for('admin_routes.admin_index'))  # Redirect back to login
+            return redirect(url_for('admin_routes.admin_index'))
 
     return render_template('admin/admin.index.html')
 
+# Get dashboard
 @adminRoutes.route('/admin-dashboard')
 def dashboard():
-    return render_template('admin/dashboard.html')  # Adjust the template path as needed
+    return render_template('admin/dashboard.html')
+
+# Admin Routes
+
+# Route to handle adding a new admin
+@adminRoutes.route('/admin/add', methods=['POST'])
+def add_admin():
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    
+    # Check if admin with the same username or email already exists
+    existing_admin = Admin.query.filter((Admin.username == username) | (Admin.email == email)).first()
+    if existing_admin:
+        flash('Admin with that username or email already exists!', 'danger')
+        return redirect(url_for('admin_routes.admin_list'))
+    
+    # Create and add the new admin
+    new_admin = Admin(username=username, email=email, password=password)
+    db.session.add(new_admin)
+    db.session.commit()
+    flash('Admin added successfully!', 'success')
+    
+    return redirect(url_for('admin_routes.admin_list'))
+
+# Display all admins and allow adding a new admin
+@adminRoutes.route('/admins', methods=['GET', 'POST'])
+def admin_list():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        new_admin = Admin(username=username, email=email, password=password)
+        db.session.add(new_admin)
+        db.session.commit()
+        flash('Admin added successfully!', 'success')
+        return redirect(url_for('admin_routes.admin_list'))
+    
+    admins = Admin.query.all()
+    return render_template('admin/admins.html', admins=admins)
+
+@adminRoutes.route('/admin/edit/<string:admin_id>', methods=['GET', 'POST'])
+def edit_admin(admin_id):
+    admin = Admin.query.get(admin_id)
+    
+    if not admin:
+        flash('Admin not found!', 'danger')
+        return redirect(url_for('admin_routes.admin_list'))
+
+    if request.method == 'POST':
+        # Update the username and email
+        admin.username = request.form['username']
+        admin.email = request.form['email']
+
+        # Check if a new password was provided
+        new_password = request.form.get('password')
+        if new_password:
+            admin.set_password(new_password)
+        
+        db.session.commit()
+        flash('Admin updated successfully!', 'success')
+        return redirect(url_for('admin_routes.admin_list'))
+
+    return render_template('admin/edit-admin.html', admin=admin)
+
+
+
+# Delete admin confirmation page
+@adminRoutes.route('/admin/delete/<string:admin_id>', methods=['GET'])
+def delete_admin(admin_id):
+    admin = Admin.query.get(admin_id)
+    return render_template('admin/delete-admin.html', admin=admin)
+
+# Confirm admin deletion
+@adminRoutes.route('/admin/delete/<string:admin_id>', methods=['POST'])
+def confirm_delete_admin(admin_id):
+    admin = Admin.query.get(admin_id)
+    db.session.delete(admin)
+    db.session.commit()
+    flash('Admin deleted successfully!', 'success')
+    return redirect(url_for('admin_routes.admin_list'))

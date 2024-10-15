@@ -1,0 +1,13 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Delete Admin{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Delete Admin</h1>
+
+<p>Are you sure you want to delete admin <strong>{{ admin.username }}</strong>?</p>
+
+<form method="POST" action="{{ url_for('admin_routes.confirm_delete_admin', admin_id=admin.id) }}">
+    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Yes, Delete</button>
+    <a href="{{ url_for('admin_routes.admin_list') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</a>
+</form>
+{% endblock %}
