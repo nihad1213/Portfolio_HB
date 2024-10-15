@@ -41,6 +41,10 @@ def profile(user_id):
         flash('User not found.', 'danger')
         return redirect(url_for('home'))
 
+    # Check if user is subscribed
+    is_subscribed = db.session.query(Subscribers).filter_by(email=user.email).first() is not None
+    user.is_subscribed = is_subscribed  # Update user's subscription status
+
     if request.method == 'POST':
         logger.debug("POST request received")
         user.name = request.form['firstName']
@@ -155,7 +159,7 @@ def reset_with_token(token):
 def subscribe(user_id):
     user = db.session.query(User).filter_by(id=user_id).first()
     if user:
-        user.is_subscribed = True 
+        user.is_subscribed = True
 
         # Add user email to the Subscribers table
         if user.email:
@@ -174,8 +178,8 @@ def subscribe(user_id):
 def unsubscribe(user_id):
     user = db.session.query(User).filter_by(id=user_id).first()
     if user:
-        user.is_subscribed = False 
-        
+        user.is_subscribed = False
+
         # Remove user email from the Subscribers table
         if user.email:
             subscriber = db.session.query(Subscribers).filter_by(email=user.email).first()
@@ -188,7 +192,6 @@ def unsubscribe(user_id):
         else:
             flash('User does not have an email address.', 'danger')
 
-        # Optionally commit the user status change if you want to update it too
         db.session.commit()
     else:
         flash('User not found!', 'danger')
