@@ -221,21 +221,48 @@ function attendEvent(event) {
     // Optional: You might also want to persist this state
     console.log(`User has confirmed attendance for: ${eventName}`);
 }
-function likeEvent(event) {
-    const likeButton = event.target.closest('.like-button');
-    const likeCountElement = likeButton.querySelector('.like-count');
-    
-    // Parse current like count and increment it
-    let currentCount = parseInt(likeCountElement.innerText);
-    currentCount++;
-    
-    // Update the displayed like count
-    likeCountElement.innerText = currentCount;
 
-    // Optional: Add logic to persist likes (local storage, server, etc.)
-    // For demonstration, you could log the updated count
-    console.log(`Event liked! New count: ${currentCount}`);
+let isUserLoggedIn = false; 
+let hasLiked = false; 
+let likeCountElement = document.querySelector('.like-count');
+
+function likeEvent(event) {
+    if (!isUserLoggedIn) {
+        alert('Please sign in to like this event.');
+        return;
+    }
+
+    
+    if (hasLiked) {
+        
+        hasLiked = false;
+        updateLikeButton(false);
+        updateLikeCount(-1);
+    } else {
+        
+        hasLiked = true;
+        updateLikeButton(true);
+        updateLikeCount(1);
+    }
 }
+function updateLikeButton(isLiked) {
+    const likeButton = document.getElementById('like-button');
+    const likeIcon = document.getElementById('like-icon');
+
+    if (isLiked) {
+        likeButton.style.color = 'red';
+        likeIcon.textContent = 'favorite'; 
+    } else {
+        likeButton.style.color = '';
+        likeIcon.textContent = 'favorite_border';
+    }
+}
+
+function updateLikeCount(delta) {
+    const currentCount = parseInt(likeCountElement.textContent);
+    likeCountElement.textContent = currentCount + delta;
+}
+
 
 
 
