@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_mail import Message, Mail
 from models.Admin import Admin
 from models.Subscriber import Subscribers
+from models.Category import Category
 from db import db
 
 # Create blueprint
@@ -148,3 +149,61 @@ def send_message():
         return redirect(url_for('admin_routes.send_message'))
 
     return render_template('admin/send-message.html')
+
+@adminRoutes.route('/categories/add', methods=['GET', 'POST'])
+def add_category():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        category_image = request.form.get('category_image')
+
+        # Create new category
+        new_category = Category(name=name, category_image=category_image)
+        db.session.add(new_category)
+        db.session.commit()
+        flash('Category added successfully!', 'success')
+        
+        return redirect(url_for('admin_routes.list_categories'))
+
+    return render_template('admin/add-category.html')
+
+# List Categories Route
+@adminRoutes.route('/categories')
+def list_categories():
+    categories = Category.query.all()
+    return render_template('admin/categories.html', categories=categories)
+
+# Edit Category Route
+@adminRoutes.route('/categories/edit/<uuid:category_id>', methods=['GET', 'POST'])
+def edit_category(category_id):
+    category = Category.query.get(category_id)
+    
+    if not category:
+        flash('Category not found!', 'danger')
+        return redirect(url_for('admin_routes.list_categories'))
+
+    if request.method == 'POST':
+        category.name = request.form['name']
+        category.category_image = request.form['category_image']
+        
+        db.session.commit()
+        flash('Category updated successfully!', 'success')
+        return redirect(url_for('admin_routes.list_categories'))
+
+    return render_template('admin/edit-category.html', category=category)
+
+# Delete Category Route
+@adminRoutes.route('/categories/delete/<uuid:category_id>', methods=['GET', 'POST'])
+def delete_category(category_id):
+    category = Category.query.get(category_id)
+    
+    if request.method == 'POST':
+        if category:
+            db.session.delete(category)
+            db.session.commit()
+            flash('Category deleted successfully!', 'success')
+        else:
+            flash('Category not found!', 'danger')
+        
+        return redirect(url_for('admin_routes.list_categories'))
+
+    return render_template('admin/delete-category.html', category=category)

@@ -1,0 +1,34 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Category List{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-semibold">Categories</h1>
+    <a href="{{ url_for('admin_routes.add_category') }}" class="bg-blue-500 text-white p-2 rounded">Add Category</a>
+</div>
+
+<table class="table-auto w-full border-collapse">
+    <thead>
+        <tr class="bg-gray-200 text-left">
+            <th class="px-4 py-2">Category Name</th>
+            <th class="px-4 py-2">Image</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-3">{{ category.name }}</td>
+            <td class="px-4 py-3">
+                <img src="{{ category.category_image }}" alt="{{ category.name }}" class="h-12 w-12 object-cover">
+            </td>
+            <td class="px-4 py-3">
+                <!-- Action buttons -->
+                <a href="{{ url_for('admin_routes.edit_category', category_id=category.id) }}" class="bg-yellow-500 text-white px-3 py-1 rounded mr-2">Edit</a>
+                <a href="{{ url_for('admin_routes.delete_category', category_id=category.id) }}" class="bg-red-500 text-white px-3 py-1 rounded">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
