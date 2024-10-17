@@ -6,12 +6,20 @@ from models.Admin import Admin
 from models.Subscriber import Subscribers
 from models.Category import Category
 from db import db
+from werkzeug.utils import secure_filename
+import os
 
 # Create blueprint
 adminRoutes = Blueprint('admin_routes', __name__)
 
 # Intialze mail
 mail = Mail()
+
+# Define allowed image extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Get admin login part
 @adminRoutes.route('/admin', methods=['GET', 'POST'])
@@ -153,17 +161,25 @@ def send_message():
 @adminRoutes.route('/categories/add', methods=['GET', 'POST'])
 def add_category():
     if request.method == 'POST':
-        name = request.form.get('name')
-        category_image = request.form.get('category_image')
-
-        # Create new category
-        new_category = Category(name=name, category_image=category_image)
-        db.session.add(new_category)
-        db.session.commit()
-        flash('Category added successfully!', 'success')
+        name = request.form['name']
+        file = request.files['category_image']
+        
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            image_path = os.path.join('static/category', filename)
+            file.save(image_path)
+            
+            # Create the category
+            new_category = Category(name=name, category_image=filename)
+            db.session.add(new_category)
+            db.session.commit()
+            
+            flash('Category added successfully with image!', 'success')
+        else:
+            flash('Invalid image format or no image uploaded! Allowed types: png, jpg, jpeg, gif.', 'danger')
         
         return redirect(url_for('admin_routes.list_categories'))
-
+    
     return render_template('admin/add-category.html')
 
 # List Categories Route
@@ -173,22 +189,29 @@ def list_categories():
     return render_template('admin/categories.html', categories=categories)
 
 # Edit Category Route
-@adminRoutes.route('/categories/edit/<uuid:category_id>', methods=['GET', 'POST'])
+@adminRoutes.route('/categories/edit/<string:category_id>', methods=['GET', 'POST'])
 def edit_category(category_id):
     category = Category.query.get(category_id)
     
     if not category:
         flash('Category not found!', 'danger')
         return redirect(url_for('admin_routes.list_categories'))
-
+    
     if request.method == 'POST':
         category.name = request.form['name']
-        category.category_image = request.form['category_image']
+        file = request.files['category_image']
+
+        # If a new file is uploaded
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            image_path = os.path.join('static/category', filename)
+            file.save(image_path)
+            category.category_image = filename
         
         db.session.commit()
         flash('Category updated successfully!', 'success')
         return redirect(url_for('admin_routes.list_categories'))
-
+    
     return render_template('admin/edit-category.html', category=category)
 
 # Delete Category Route
