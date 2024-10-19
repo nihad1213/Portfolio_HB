@@ -9,7 +9,8 @@ from datetime import timedelta
 from dotenv import load_dotenv
 from db import db
 from flask_jwt_extended import JWTManager
-from models.Admin import Admin  # Import the Admin model
+from models.Admin import Admin
+from flask_migrate import Migrate
 
 # Load the .env file
 load_dotenv()
@@ -55,7 +56,7 @@ from models.Chat import Chat
 from models.Event import Event
 from models.Ticket import Ticket
 from models.Subscriber import Subscribers
-
+migrate = Migrate(app, db)
 # Importing Routes
 from routes.footer_routes import footerRoutes, get_current_year
 from routes.user_routes import userRoutes, dashboardRoutes
