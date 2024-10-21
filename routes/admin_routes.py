@@ -5,6 +5,7 @@ from flask_mail import Message, Mail
 from models.Admin import Admin
 from models.Subscriber import Subscribers
 from models.Category import Category
+from models.Event import Event
 from db import db
 from werkzeug.utils import secure_filename
 import os
@@ -230,3 +231,24 @@ def delete_category(category_id):
         return redirect(url_for('admin_routes.list_categories'))
 
     return render_template('admin/delete-category.html', category=category)
+
+# Route to list all events
+@adminRoutes.route('/admin/events')
+def admin_events():
+    events = Event.query.all()
+    return render_template('admin/events.html', events=events)
+
+# Route to display event details
+@adminRoutes.route('/admin/event/<uuid:event_id>')
+def admin_event_details(event_id):
+    event = Event.query.get_or_404(event_id)
+    return render_template('admin/event_details.html', event=event)
+
+# Route to toggle event status (Active/Inactive)
+@adminRoutes.route('/admin/event/toggle-status/<uuid:event_id>', methods=['POST'])
+def toggle_event_status(event_id):
+    event = Event.query.get_or_404(event_id)
+    event.status = not event.status
+    db.session.commit()
+    flash(f"Event '{event.title}' status updated to {'active' if event.status else 'inactive'}", 'success')
+    return redirect(url_for('admin_routes.admin_events'))

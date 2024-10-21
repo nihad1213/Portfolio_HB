@@ -4,39 +4,45 @@
 
 <section class="create-event-form">
     <div class="container">
-        <h2>Event Details</h2>
-        <form id="eventForm" enctype="multipart/form-data">
+        <h2>Create Event</h2>
+        <form id="eventForm" method="POST" enctype="multipart/form-data">
+            <!-- Event Name -->
             <label for="eventName">Event Name:</label>
             <input type="text" id="eventName" name="eventName" required>
-            
+
+            <!-- Description -->
             <label for="eventDescription">Description:</label>
             <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
-            
+
+            <!-- Date -->
             <label for="eventDate">Date:</label>
             <input type="date" id="eventDate" name="eventDate" required>
-            
+
+            <!-- Time -->
             <label for="eventTime">Time:</label>
             <input type="time" id="eventTime" name="eventTime" required>
-            
+
+            <!-- Location -->
+            <label for="eventLocation">Location:</label>
+            <input type="text" id="eventLocation" name="eventLocation" required>
+
+            <!-- Image Upload -->
             <label for="eventImage">Upload Image:</label>
             <input type="file" id="eventImage" name="eventImage" accept="image/*">
 
-            <!-- Choose Category Section -->
+            <!-- Dynamic Categories Dropdown -->
             <label for="eventCategory">Choose Category:</label>
             <select id="eventCategory" name="eventCategory" required>
                 <option value="" disabled selected>Select a category</option>
-                <option value="art">Art</option>
-                <option value="sport">Sport</option>
-                <option value="science">Science</option>
-                <option value="other">Other</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
             </select>
 
+            <!-- Create Event Button -->
             <button type="submit">Create Event</button>
         </form>
     </div>
 </section>
 
-<script src="scripts.js" defer></script>
-
 {% endblock %}
-

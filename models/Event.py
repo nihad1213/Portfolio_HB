@@ -14,8 +14,9 @@ class Event(BaseModel):
     image = Column(String(255), nullable=True)
     description = Column(String(255), nullable=True)
     registration = Column(Boolean, default=False)
-
-    def __init__(self, title, date, location, category, image=None, description=None, registration=False):
+    status = Column(Boolean, default=False)
+    
+    def __init__(self, title, date, location, category, image=None, description=None, registration=False, status=False):
         self.title = title
         self.date = date
         self.location = location
@@ -23,6 +24,7 @@ class Event(BaseModel):
         self.image = image
         self.description = description
         self.registration = registration
+        self.status = status
 
     def __repr__(self):
-        return f"<Event(title='{self.title}', date='{self.date}', location='{self.location}', category='{self.category.name}')>"
+        return f"<Event(title='{self.title}', date='{self.date}', location='{self.location}', category='{self.category.name}', status='{self.status}')>"
