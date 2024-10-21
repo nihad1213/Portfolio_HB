@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+<section class="event-details">
+    <div class="container">
+        <h2>{{ event.title }}</h2>
+        <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}">
+        <p>Date: {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p>Location: {{ event.location }}</p>
+        <p>{{ event.description }}</p>
+    </div>
+</section>
+{% endblock %}

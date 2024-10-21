@@ -9,7 +9,7 @@ from datetime import timedelta
 from dotenv import load_dotenv
 from db import db
 from flask_jwt_extended import JWTManager
-from models.Admin import Admin  # Import the Admin model
+from models.Admin import Admin
 
 # Load the .env file
 load_dotenv()

@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Admin Panel{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Ensuring full height for body and html */
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
 <body class="min-h-screen flex">
 
@@ -16,13 +22,13 @@
             <a href="/admins" class="block py-2 px-3 rounded hover:bg-gray-700">Admin</a>
             <a href="/send-message" class="block py-2 px-3 rounded hover:bg-gray-700">Send Message</a>
             <a href="/categories" class="block py-2 px-3 rounded hover:bg-gray-700">Categories</a>
-            <a href="#" class="block py-2 px-3 rounded hover:bg-gray-700">Events</a>
+            <a href="{{ url_for('admin_routes.admin_events') }}" class="block py-2 px-3 rounded hover:bg-gray-700">Events</a>
             <a href="#" class="block py-2 px-3 rounded hover:bg-gray-700">Settings</a>
         </nav>
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 flex flex-col">
         <!-- Navbar -->
         <nav class="bg-white shadow-md px-4 py-4 flex justify-between items-center">
             <div class="text-lg">Welcome, Admin</div>
@@ -43,7 +49,7 @@
         </nav>
 
         <!-- Page Content -->
-        <div class="p-6">
+        <div class="p-6 flex-1 overflow-y-auto">
             {% block content %}
             <!-- Specific page content goes here -->
             {% endblock %}
