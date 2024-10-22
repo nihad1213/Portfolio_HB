@@ -10,6 +10,17 @@
         <p>Date: {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
         <p>Location: {{ event.location }}</p>
         <p>{{ event.description }}</p>
+        <p><strong>Likes:</strong> {{ event.likes }}</p>
+        <p><strong>Attendees:</strong> {{ event.attendees }}</p>
+
+        <!-- Attend and Like Forms -->
+        <form action="{{ url_for('main_routes.attend_event', event_id=event.id) }}" method="POST">
+            <button type="submit" class="btn btn-primary">Attend Event</button>
+        </form>
+
+        <form action="{{ url_for('main_routes.like_event', event_id=event.id) }}" method="POST">
+            <button type="submit" class="btn btn-secondary">Like Event</button>
+        </form>
     </div>
 </section>
 {% endblock %}
