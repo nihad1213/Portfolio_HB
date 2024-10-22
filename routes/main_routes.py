@@ -78,6 +78,34 @@ def event_details(event_id):
     event = Event.query.get_or_404(event_id)
     return render_template('main/event-details.html', event=event)
 
+# Route to attend the event
+@mainRoutes.route('/event/<uuid:event_id>/attend', methods=['POST'])
+def attend_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    try:
+        event.attendees += 1
+        db.session.commit()
+        flash("You have successfully attended this event!", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error attending event: {e}", "error")
+    
+    return redirect(url_for('main_routes.event_details', event_id=event_id))
+
+# Route to like the event
+@mainRoutes.route('/event/<uuid:event_id>/like', methods=['POST'])
+def like_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    try:
+        event.likes += 1
+        db.session.commit()
+        flash("You have liked this event!", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error liking event: {e}", "error")
+    
+    return redirect(url_for('main_routes.event_details', event_id=event_id))
+
 @mainRoutes.route('/subscribe', methods=['POST'])
 def subscribe():
     email = request.form.get('email')

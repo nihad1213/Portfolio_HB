@@ -8,8 +8,12 @@ from flask_mail import Mail
 from datetime import timedelta
 from dotenv import load_dotenv
 from db import db
+<<<<<<< HEAD
+from waf import waf_middleware, apply_http_method_restrictions, check_file_uploads
+=======
 from flask_jwt_extended import JWTManager
 from models.Admin import Admin
+>>>>>>> origin/main
 
 # Load the .env file
 load_dotenv()
@@ -73,11 +77,20 @@ app.register_blueprint(mainRoutes)
 app.register_blueprint(profileRoutes)
 app.register_blueprint(adminRoutes)
 
+# Apply WAF Middleware to all routes
+@app.before_request
+def apply_waf():
+    """Apply the WAF middleware to every request."""
+    waf_middleware()  # Check for SQL Injection, XSS, IP blocking, etc.
+    apply_http_method_restrictions()  # Enforce allowed HTTP methods
+    check_file_uploads()  # Inspect file uploads for security
+
 # Route for index
 @app.route('/')
 def index():
     return render_template('index.html', current_year=get_current_year())
 
+# Ensure database tables are created before the app starts
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
