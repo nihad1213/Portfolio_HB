@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from sqlalchemy import Column, String, Date, Boolean, ForeignKey
+from sqlalchemy import Column, String, Date, Boolean, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from models.BaseModel import BaseModel
 
@@ -15,7 +15,11 @@ class Event(BaseModel):
     description = Column(String(255), nullable=True)
     registration = Column(Boolean, default=False)
     status = Column(Boolean, default=False)
-    
+
+    # Fields for tracking likes and attendees
+    attendees = Column(Integer, default=0)
+    likes = Column(Integer, default=0)
+
     def __init__(self, title, date, location, category, image=None, description=None, registration=False, status=False):
         self.title = title
         self.date = date
