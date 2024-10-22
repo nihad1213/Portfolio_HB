@@ -1,0 +1,23 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+<section class="events-list">
+    <div class="container">
+        <h2>All Events</h2>
+        <div class="events-grid">
+            {% for event in events %}
+            <div class="event-card">
+                <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}">
+                <h3><a href="{{ url_for('main_routes.event_details', event_id=event.id) }}">{{ event.title }}</a></h3>
+                <p>{{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p>{{ event.description[:100] }}...</p>
+            </div>
+            {% else %}
+            <p>No events available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

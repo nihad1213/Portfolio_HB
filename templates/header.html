@@ -1,14 +1,23 @@
 <header>
     <div class="container">
-        <h1>AzerbaijanFest</h1>
+        <h1>
+            <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='photos/Logo.png') }}" alt="AzerbaijanFest Logo" class="logo">
+                AzerbaijanFest
+            </a>
+        </h1>
         <input type="text" id="search" placeholder="Search for events...">
         <nav>
-            <a href="/">Home</a>
-            <a href="/schedule"><i class="far fa-calendar-alt"></i> Schedule</a>
-            <a href="/profile">Me</a>
-            <a href="/events"><i class="far fa-bookmark"></i>Saved Events</a>
-            <a href="/chat"><i class="fas fa-comments"></i> Chat</a>
-            <a href="/login">Login</a>
+            {% if session.get('user_id') %}
+                <!-- Links to show when user is logged in -->
+                <a href="/schedule"><i class="far fa-calendar-alt"></i> Schedule</a>
+                <a href="{{ url_for('profile_routes.profile', user_id=session.get('user_id')) }}">Me</a>
+                <a href="/events"><i class="far fa-bookmark"></i> Saved Events</a>
+                <a href="/chat"><i class="fas fa-comments"></i> Chat</a>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login/Register</a>
+            {% endif %}
         </nav>
     </div>
 </header>
