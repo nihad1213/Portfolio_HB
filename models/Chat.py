@@ -13,7 +13,7 @@ class Chat(BaseModel, db.Model):  # Inherit from db.Model to integrate with SQLA
     created_at = db.Column(DateTime, default=datetime.utcnow)  # Add timestamp for chat creation
 
     # Define the relationship between Chat and User, lazy='dynamic' to improve query performance
-    user = relationship('User', backref='chats', lazy='dynamic')
+    user = relationship('User', backref='chats')
 
     def __init__(self, user_id, message):
         self.user_id = user_id

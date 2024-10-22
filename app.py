@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Importing modules
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, session, request, jsonify
 from flask_mysqldb import MySQL
 import os
 from flask_mail import Mail
@@ -11,6 +11,9 @@ from db import db
 from flask_jwt_extended import JWTManager
 from models.Admin import Admin
 from flask_migrate import Migrate
+from oauthlib.oauth2 import WebApplicationClient
+import requests
+import json
 
 # Load the .env file
 load_dotenv()
@@ -48,6 +51,16 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
 # Initialize Flask-Mail
 mail = Mail(app)
 
+# Google OAuth 2.0 setup
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')  # Add to your .env
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')  # Add to your .env
+GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
+
+client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+def get_google_provider_cfg():
+    return requests.get(GOOGLE_DISCOVERY_URL).json()
+
 # Importing Models
 from models.User import User
 from models.Attendance import Attendance
@@ -56,7 +69,9 @@ from models.Chat import Chat
 from models.Event import Event
 from models.Ticket import Ticket
 from models.Subscriber import Subscribers
+
 migrate = Migrate(app, db)
+
 # Importing Routes
 from routes.footer_routes import footerRoutes, get_current_year
 from routes.user_routes import userRoutes, dashboardRoutes
@@ -73,6 +88,78 @@ app.register_blueprint(dashboardRoutes)
 app.register_blueprint(mainRoutes)
 app.register_blueprint(profileRoutes)
 app.register_blueprint(adminRoutes)
+
+# Google Login Route
+@app.route("/login")
+def login():
+    google_provider_cfg = get_google_provider_cfg()
+    authorization_endpoint = google_provider_cfg["authorization_endpoint"]
+
+    request_uri = client.prepare_request_uri(
+        authorization_endpoint,
+        redirect_uri=request.base_url + "/callback",
+        scope=["openid", "email", "profile"],
+    )
+    return redirect(request_uri)
+
+
+# Google OAuth callback route
+@app.route("/login/callback")
+def callback():
+    # Get authorization code Google sent back to you
+    code = request.args.get("code")
+
+    google_provider_cfg = get_google_provider_cfg()
+    token_endpoint = google_provider_cfg["token_endpoint"]
+
+    token_url, headers, body = client.prepare_token_request(
+        token_endpoint,
+        authorization_response=request.url,
+        redirect_url=request.base_url,
+        code=code
+    )
+    token_response = requests.post(
+        token_url,
+        headers=headers,
+        data=body,
+        auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
+    )
+
+    # Parse the tokens!
+    client.parse_request_body_response(json.dumps(token_response.json()))
+
+    userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
+    uri, headers, body = client.add_token(userinfo_endpoint)
+    userinfo_response = requests.get(uri, headers=headers, data=body)
+
+    # Verify the user's email is verified by Google
+    if userinfo_response.json().get("email_verified"):
+        users_email = userinfo_response.json()["email"]
+        users_name = userinfo_response.json()["given_name"]
+        users_picture = userinfo_response.json()["picture"]
+
+        # Store user info in the session
+        session["email"] = users_email
+        session["name"] = users_name
+        session["picture"] = users_picture
+
+        return redirect(url_for("dashboard"))
+    else:
+        return "User email not available or not verified by Google.", 400
+
+# Route for user dashboard after login
+@app.route("/dashboard")
+def dashboard():
+    if "email" not in session:
+        return redirect(url_for("login"))
+
+    user_info = {
+        "name": session["name"],
+        "email": session["email"],
+        "picture": session["picture"]
+    }
+
+    return render_template("dashboard.html", user=user_info)
 
 # Route for index
 @app.route('/')
