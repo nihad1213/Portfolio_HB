@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Importing modules
+# Import necessary modules
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
 import os
@@ -8,38 +8,37 @@ from flask_mail import Mail
 from datetime import timedelta
 from dotenv import load_dotenv
 from db import db
-<<<<<<< HEAD
-from waf import waf_middleware, apply_http_method_restrictions, check_file_uploads
-=======
 from flask_jwt_extended import JWTManager
 from models.Admin import Admin
->>>>>>> origin/main
+from waf import waf_middleware, enforce_allowed_methods, check_file_uploads
 
-# Load the .env file
+# Load environment variables from .env file
 load_dotenv()
 
-# Create flask app
+# Create the Flask app
 app = Flask(__name__)
 
+# JWT configuration
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
-# Initialize JWT Manager
+# Initialize the JWT Manager
 jwt = JWTManager(app)
 
-# Database Config
+# Database configuration
 DATABASE_TYPE = os.getenv('DATABASE_TYPE')
 DATABASE_USER_NAME = os.getenv('DATABASE_USER_NAME')
 DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
 DATABASE_NAME = os.getenv('DATABASE_NAME')
 
-# Database URI
+# SQLAlchemy Database URI
 app.config['SQLALCHEMY_DATABASE_URI'] = f"{DATABASE_TYPE}://{DATABASE_USER_NAME}:{DATABASE_PASSWORD}@localhost:3306/{DATABASE_NAME}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Initialize SQLAlchemy with the Flask app
 db.init_app(app)
 
-# Fetch configuration from environment variables
+# Mail configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
 app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
@@ -51,7 +50,7 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
 # Initialize Flask-Mail
 mail = Mail(app)
 
-# Importing Models
+# Importing models
 from models.User import User
 from models.Attendance import Attendance
 from models.Category import Category
@@ -60,7 +59,7 @@ from models.Event import Event
 from models.Ticket import Ticket
 from models.Subscriber import Subscribers
 
-# Importing Routes
+# Import routes
 from routes.footer_routes import footerRoutes, get_current_year
 from routes.user_routes import userRoutes, dashboardRoutes
 from routes.header_routes import headerRoutes
@@ -68,7 +67,7 @@ from routes.main_routes import mainRoutes
 from routes.profile_routes import profileRoutes
 from routes.admin_routes import adminRoutes
 
-# Registering blueprints
+# Registering blueprints for different route modules
 app.register_blueprint(footerRoutes)
 app.register_blueprint(userRoutes)
 app.register_blueprint(headerRoutes)
@@ -77,20 +76,20 @@ app.register_blueprint(mainRoutes)
 app.register_blueprint(profileRoutes)
 app.register_blueprint(adminRoutes)
 
-# Apply WAF Middleware to all routes
+# Apply WAF Middleware to all incoming requests
 @app.before_request
 def apply_waf():
     """Apply the WAF middleware to every request."""
-    waf_middleware()  # Check for SQL Injection, XSS, IP blocking, etc.
-    apply_http_method_restrictions()  # Enforce allowed HTTP methods
+    waf_middleware()  # Checks for SQL Injection, XSS, IP blocking, etc.
+    enforce_allowed_methods(['GET', 'POST'])  # Enforce allowed HTTP methods (modify as needed)
     check_file_uploads()  # Inspect file uploads for security
 
-# Route for index
+# Route for the index page
 @app.route('/')
 def index():
     return render_template('index.html', current_year=get_current_year())
 
-# Ensure database tables are created before the app starts
+# Ensure that the database tables are created before the app starts
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
@@ -110,4 +109,5 @@ if __name__ == "__main__":
         else:
             print(f"Admin user {admin_username} already exists.")
 
+    # Start the app on port 8000 with debugging enabled
     app.run(host="0.0.0.0", port=8000, debug=True)

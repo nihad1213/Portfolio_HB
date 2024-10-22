@@ -1,7 +1,7 @@
 import re
-from flask import request, abort, jsonify, g
-from time import time
+from flask import request, abort, jsonify
 from functools import wraps
+from time import time
 
 # Dictionary to hold rate limiting data (e.g., IP: [request_count, first_request_time])
 rate_limit_data = {}
@@ -33,7 +33,6 @@ attack_patterns = {
     ]
 }
 
-# Decorator for handling middleware functions
 def apply_middleware(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -125,11 +124,3 @@ def log_request_details(reason=None, data=None):
     }
     # Log this to a centralized log system (file, external service, etc.)
     print(f"Suspicious request logged: {log_entry}")
-
-# Apply middleware to your routes
-@app.route("/example", methods=["GET", "POST"])
-@apply_middleware
-def example_route():
-    enforce_allowed_methods(['GET', 'POST'])
-    return jsonify({"message": "Success!"})
-
