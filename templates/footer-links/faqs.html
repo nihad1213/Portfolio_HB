@@ -3,42 +3,68 @@
 {% block title %}AzerbaijanFest - Frequently Asked Questions{% endblock %}
 
 {% block content %}
-<h2 class="title">Frequently Asked Questions (FAQs)</h2>
+<h2 class="text-4xl font-bold text-center text-gray-900 mb-10">Frequently Asked Questions (FAQs)</h2>
 
-<div class="faq-container">
-    <div class="faq-item">
-        <button class="faq-question" onclick="toggleAnswer(this)">
+<div class="faq-container max-w-2xl mx-auto space-y-4">
+    <!-- FAQ Item Template -->
+    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
+        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
             What is AzerbaijanFest?
+            <span class="float-right transition-transform transform" id="arrow">▼</span>
         </button>
-        <div class="faq-answer" style="display: none;">
-            <p>AzerbaijanFest is a cultural celebration that showcases the rich traditions, festivals, and arts of Azerbaijan, connecting locals and visitors through immersive experiences.</p>
+        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
+            <p class="text-black">AzerbaijanFest is a cultural celebration that showcases the rich traditions, festivals, and arts of Azerbaijan, connecting locals and visitors through immersive experiences.</p>
         </div>
     </div>
 
-    <div class="faq-item">
-        <button class="faq-question" onclick="toggleAnswer(this)">
+    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
+        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
             How can I participate in the events?
+            <span class="float-right transition-transform transform" id="arrow">▼</span>
         </button>
-        <div class="faq-answer" style="display: none;">
-            <p>You can participate by checking our events calendar on the website, registering for workshops, or purchasing tickets for concerts and festivals.</p>
+        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
+            <p class="text-black">You can participate by checking our events calendar on the website, registering for workshops, or purchasing tickets for concerts and festivals.</p>
         </div>
     </div>
 
-    <div class="faq-item">
-        <button class="faq-question" onclick="toggleAnswer(this)">
+    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
+        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
             Are there age restrictions for workshops?
+            <span class="float-right transition-transform transform" id="arrow">▼</span>
         </button>
-        <div class="faq-answer" style="display: none;">
-            <p>Workshops are designed for all ages. However, some workshops may have specific age recommendations. Please check the individual workshop descriptions for details.</p>
+        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
+            <p class="text-black">Workshops are designed for all ages. However, some workshops may have specific age recommendations. Please check the individual workshop descriptions for details.</p>
         </div>
     </div>
 
-    <div class="faq-item">
-        <button class="faq-question" onclick="toggleAnswer(this)">
+    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
+        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
             Can I volunteer for AzerbaijanFest?
+            <span class="float-right transition-transform transform" id="arrow">▼</span>
         </button>
-        <div class="faq-answer" style="display: none;">
-            <p>Yes! We welcome volunteers to help with various aspects of the events. Please contact us through the 'Contact Us' section for more information.</p>
+        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
+            <p class="text-black">Yes! We welcome volunteers to help with various aspects of the events. Please contact us through the 'Contact Us' section for more information.</p>
+        </div>
+    </div>
+
+    <!-- Additional FAQ Items -->
+    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
+        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
+            Where can I find the event schedule?
+            <span class="float-right transition-transform transform" id="arrow">▼</span>
+        </button>
+        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
+            <p class="text-black">The event schedule is available on our official website under the 'Events' section. You can browse events by date, category, or location.</p>
+        </div>
+    </div>
+
+    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
+        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
+            Is there an entry fee for AzerbaijanFest?
+            <span class="float-right transition-transform transform" id="arrow">▼</span>
+        </button>
+        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
+            <p class="text-black">Entry to some events is free, while others may require a ticket. Please check each event’s details on our website to know if there’s an entry fee.</p>
         </div>
     </div>
 </div>
@@ -46,7 +72,13 @@
 <script>
     function toggleAnswer(button) {
         const answer = button.nextElementSibling;
-        answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        const arrow = button.querySelector("#arrow");
+
+        // Toggle answer visibility
+        answer.classList.toggle('hidden');
+        
+        // Rotate the arrow
+        arrow.classList.toggle('rotate-180');
     }
 </script>
 {% endblock %}

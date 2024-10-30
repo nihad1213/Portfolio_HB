@@ -6,17 +6,12 @@ body {
     background-color: #f8f9fa;
 }
 
-<<<<<<< HEAD
-.main-container {
-    max-width: 801px;
-=======
 /* Main container for content pages */
 .main-content .main-container {
     max-width: 800px;
->>>>>>> origin/main
     margin: 40px auto;
     padding: 32px;
-    background-color: white;
+    /*background-color: white;*/
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
