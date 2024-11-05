@@ -29,7 +29,7 @@ def login():
         else:
             flash('Username/Email or password is incorrect', 'error')
 
-    return render_template('login.html')
+    return render_template('user/login.html')
 
 @userRoutes.route('/register', methods=['POST'])
 def register():
@@ -89,7 +89,7 @@ def dashboard():
         'updated_at': user.updated_at
     }
 
-    return render_template('dashboard.html', user=user_data)
+    return render_template('user/dashboard.html', user=user_data)
 
 @userRoutes.route('/logout')
 def logout():
