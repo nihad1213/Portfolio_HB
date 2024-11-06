@@ -128,11 +128,12 @@ def password_reset():
             msg.body = f'Click the link to reset your password: {reset_link}'
             mail.send(msg)
 
-            # Flash a success message
-            flash('We have sent you an email. Please check your inbox.', 'success')
+            # Flash a success message with reset-success category
+            flash('We have sent you an email. Please check your inbox.', 'reset-success')
             return redirect(url_for('profile_routes.password_reset'))
         else:
-            flash('Email address not found.', 'danger')
+            # Flash an error message with reset-error category
+            flash('Email address not found.', 'reset-error')
 
     return render_template('profile/password_reset.html')
 
@@ -147,11 +148,16 @@ def reset_with_token(token):
     if request.method == 'POST':
         new_password = request.form['new_password']
         user = User.query.filter_by(email=email).first()
+
         if user:
-            user.set_password(new_password)  # Set the new password
-            db.session.commit()
-            flash('Your password has been updated!', 'success')
-            return redirect(url_for('user_routes.login'))  # Correctly redirect to the login page
+            # Password length validation
+            if len(new_password) < 5:
+                flash('Password must be at least 5 characters long.', 'reset-error')
+            else:
+                user.set_password(new_password)  # Set the new password
+                db.session.commit()
+                flash('Your password has been updated!', 'success')
+                return redirect(url_for('user_routes.login'))  # Redirect to login page after successful update
 
     return render_template('profile/reset_password.html', token=token)
 

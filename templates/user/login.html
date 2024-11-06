@@ -40,8 +40,7 @@
         <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Sign In</button>
       </div>
       <div class="flex justify-center">
-        <a href="#forgot" class="text-sm text-blue-500 hover:underline">Forgot Password?</a>
-      </div>
+        <a href="{{ url_for('profile_routes.password_reset') }}" class="text-sm text-blue-500 hover:underline">Forgot Password?</a>      </div>
     </form>
 
     <!-- Sign Up Form -->
