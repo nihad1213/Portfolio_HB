@@ -16,11 +16,12 @@ class Event(BaseModel):
     registration = Column(Boolean, default=False)
     status = Column(Boolean, default=False)
 
-    # Fields for tracking likes and attendees
+    # Fields for tracking likes, attendees, and capacity
     attendees = Column(Integer, default=0)
     likes = Column(Integer, default=0)
+    capacity = Column(Integer, nullable=True)
 
-    def __init__(self, title, date, location, category, image=None, description=None, registration=False, status=False):
+    def __init__(self, title, date, location, category, image=None, description=None, registration=False, status=False, capacity=None):
         self.title = title
         self.date = date
         self.location = location
@@ -29,6 +30,7 @@ class Event(BaseModel):
         self.description = description
         self.registration = registration
         self.status = status
+        self.capacity = capacity
 
     def __repr__(self):
-        return f"<Event(title='{self.title}', date='{self.date}', location='{self.location}', category='{self.category.name}', status='{self.status}')>"
+        return f"<Event(title='{self.title}', date='{self.date}', location='{self.location}', category='{self.category.name}', status='{self.status}', capacity='{self.capacity}')>"
