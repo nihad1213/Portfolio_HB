@@ -17,17 +17,17 @@ def login():
         password = request.form.get('password')
 
         if not user or not password:
-            flash('Please fill out both fields', 'error')
-            return render_template('login.html')
+            flash('Please fill out both fields', 'error-login')
+            return render_template('user/login.html')
 
         user_obj = User.find_by_email(user) or User.find_by_username(user)
-        
+
         if user_obj and user_obj.check_password(password):
             session['user_id'] = user_obj.id
-            flash('Logged in successfully!', 'success')
+            flash('Logged in successfully!', 'success-login')
             return redirect(url_for('index'))
         else:
-            flash('Username/Email or password is incorrect', 'error')
+            flash('Username/Email or password is incorrect', 'error-login')
 
     return render_template('user/login.html')
 
@@ -41,16 +41,20 @@ def register():
     confirm_password = request.form.get('confirm_password')
 
     if not name or not surname or not username or not email or not password or not confirm_password:
-        flash('Please fill out all fields', 'error')
+        flash('Please fill out all fields', 'error-register')
+        return redirect(url_for('user_routes.login'))
+
+    if len(password) < 5:
+        flash('Password must be at least 5 characters long', 'error-register')
         return redirect(url_for('user_routes.login'))
 
     if password != confirm_password:
-        flash('Passwords do not match', 'error')
+        flash('Passwords do not match', 'error-register')
         return redirect(url_for('user_routes.login'))
 
     existing_user = User.query.filter((User.email == email) | (User.username == username)).first()
     if existing_user:
-        flash('Email or username is already registered', 'error')
+        flash('Email or username is already registered', 'error-register')
         return redirect(url_for('user_routes.login'))
 
     new_user = User(
@@ -64,32 +68,8 @@ def register():
     db.session.add(new_user)
     db.session.commit()
 
-    flash('Account created successfully!', 'success')
+    flash('Account created successfully!', 'success-register')
     return redirect(url_for('user_routes.login'))
-
-dashboardRoutes = Blueprint('dashboard_routes', __name__)
-
-@dashboardRoutes.route('/dashboard', methods=['GET'])
-@jwt_required()  
-def dashboard():
-    current_user_id = get_jwt_identity()
-    
-    user = User.query.get(current_user_id)
-
-    if not user:
-        flash('User not found', 'error')
-        return redirect(url_for('user_routes.login'))
-
-    user_data = {
-        'name': user.name,
-        'surname': user.surname,
-        'email': user.email,
-        'attend': user.attend,
-        'created_at': user.created_at,
-        'updated_at': user.updated_at
-    }
-
-    return render_template('user/dashboard.html', user=user_data)
 
 @userRoutes.route('/logout')
 def logout():
