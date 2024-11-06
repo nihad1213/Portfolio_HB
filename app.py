@@ -82,7 +82,7 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-        # Check if the admin already exists
+        # Check if the admin already exists and Create admin part
         admin_username = "admin"
         admin_email = "admin@fest.com"
         admin_password = "admin"
