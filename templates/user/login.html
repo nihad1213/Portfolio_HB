@@ -1,65 +1,113 @@
 {% extends "layouts/base.html" %}
 {% block content %}
-<div class="login-wrap">
-  <div class="login-html">
-    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-    <div class="login-form">
-      <form class="sign-in-htm" action="{{ url_for('user_routes.login') }}" method="post">
-        <div class="group">
-          <label for="user" class="label">Username or Email</label>
-          <input id="user" type="text" class="input" name="user">
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Password</label>
-          <input id="pass" type="password" class="input" data-type="password" name="password">
-        </div>
-        <div class="group">
-          <input id="check" type="checkbox" class="check" checked>
-          <label for="check"><span class="icon"></span> Keep me Signed in</label>
-        </div>
-        <div class="group">
-          <input type="submit" class="button" value="Sign In">
-        </div>
-        <div class="hr"></div>
-        <div class="foot-lnk">
-          <a href="#forgot">Forgot Password?</a>
-        </div>
-      </form>
-      <form class="sign-up-htm" action="{{ url_for('user_routes.register') }}" method="post">
-        <div class="group">
-          <label for="name" class="label">Name</label>
-          <input id="name" type="text" class="input" name="name">
-        </div>
-        <div class="group">
-          <label for="surname" class="label">Surname</label>
-          <input id="surname" type="text" class="input" name="surname">
-        </div>
-        <div class="group">
-          <label for="username" class="label">Username</label>
-          <input id="username" type="text" class="input" name="username">
-        </div>
-        <div class="group">
-          <label for="email" class="label">Email Address</label>
-          <input id="email" type="email" class="input" name="email">
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Password</label>
-          <input id="pass" type="password" class="input" data-type="password" name="password">
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Repeat Password</label>
-          <input id="pass" type="password" class="input" data-type="password" name="confirm_password">
-        </div>
-        <div class="group">
-          <input type="submit" class="button" value="Sign Up">
-        </div>
-        <div class="hr"></div>
-        <div class="foot-lnk">
-          <label for="tab-1">Already Member?</label>
-        </div>
-      </form>
+<div class="flex justify-center items-center min-h-screen bg-gray-100 py-10">
+  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+    <div class="flex justify-between mb-4">
+      <button id="sign-in-tab" class="text-lg font-semibold text-blue-500 border-b-2 border-transparent hover:border-blue-500 transition">Sign In</button>
+      <button id="sign-up-tab" class="text-lg font-semibold text-gray-500 hover:text-blue-500 transition">Sign Up</button>
     </div>
+    
+    <!-- Sign In Form -->
+    <form id="sign-in-form" action="{{ url_for('user_routes.login') }}" method="post" class="space-y-4">
+      {% if form_errors %}
+        <div class="bg-red-100 text-red-700 p-3 rounded-md mb-4">
+          <ul>
+            {% for error in form_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <div class="space-y-2">
+        <label for="user" class="block text-gray-700">Username or Email</label>
+        <input id="user" type="text" name="user" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="space-y-2">
+        <label for="pass" class="block text-gray-700">Password</label>
+        <input id="pass" type="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="flex items-center space-x-2">
+        <input id="check" type="checkbox" class="h-5 w-5 text-blue-500">
+        <label for="check" class="text-sm text-gray-700">Keep me signed in</label>
+      </div>
+      <div class="space-y-2">
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Sign In</button>
+      </div>
+      <div class="flex justify-center">
+        <a href="#forgot" class="text-sm text-blue-500 hover:underline">Forgot Password?</a>
+      </div>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="sign-up-form" action="{{ url_for('user_routes.register') }}" method="post" class="space-y-4 hidden">
+      {% if form_errors %}
+        <div class="bg-red-100 text-red-700 p-3 rounded-md mb-4">
+          <ul>
+            {% for error in form_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <div class="space-y-2">
+        <label for="name" class="block text-gray-700">Name</label>
+        <input id="name" type="text" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="space-y-2">
+        <label for="surname" class="block text-gray-700">Surname</label>
+        <input id="surname" type="text" name="surname" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="space-y-2">
+        <label for="username" class="block text-gray-700">Username</label>
+        <input id="username" type="text" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="space-y-2">
+        <label for="email" class="block text-gray-700">Email Address</label>
+        <input id="email" type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="space-y-2">
+        <label for="pass" class="block text-gray-700">Password</label>
+        <input id="pass" type="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="space-y-2">
+        <label for="pass" class="block text-gray-700">Repeat Password</label>
+        <input id="pass" type="password" name="confirm_password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div class="space-y-2">
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Sign Up</button>
+      </div>
+      <div class="flex justify-center">
+        <label for="tab-1" class="text-sm text-blue-500 hover:underline" id="already-member-link">Already a Member?</label>
+      </div>
+    </form>
   </div>
 </div>
+
+<script>
+  // Change between forms
+  document.getElementById("sign-in-tab").addEventListener("click", function() {
+    document.getElementById("sign-in-form").classList.remove("hidden");
+    document.getElementById("sign-up-form").classList.add("hidden");
+    document.getElementById("sign-in-tab").classList.add("text-blue-500");
+    document.getElementById("sign-up-tab").classList.remove("text-blue-500");
+    document.getElementById("sign-up-tab").classList.add("text-gray-500");
+  });
+
+  document.getElementById("sign-up-tab").addEventListener("click", function() {
+    document.getElementById("sign-up-form").classList.remove("hidden");
+    document.getElementById("sign-in-form").classList.add("hidden");
+    document.getElementById("sign-up-tab").classList.add("text-blue-500");
+    document.getElementById("sign-in-tab").classList.remove("text-blue-500");
+    document.getElementById("sign-in-tab").classList.add("text-gray-500");
+  });
+
+  // Are you member part
+  document.getElementById("already-member-link").addEventListener("click", function() {
+    document.getElementById("sign-in-form").classList.remove("hidden");
+    document.getElementById("sign-up-form").classList.add("hidden");
+    document.getElementById("sign-in-tab").classList.add("text-blue-500");
+    document.getElementById("sign-up-tab").classList.remove("text-blue-500");
+    document.getElementById("sign-up-tab").classList.add("text-gray-500");
+  });
+</script>
 {% endblock %}

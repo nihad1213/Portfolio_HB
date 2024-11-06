@@ -3,35 +3,60 @@
 {% block title %}AzerbaijanFest - Contact Us{% endblock %}
 
 {% block content %}
-<h2 class="title">Contact Us</h2>
+<section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-6">
+        <!-- Title Section -->
+        <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-8">
+            Contact Us
+        </h2>
 
-<!-- Display flash messages -->
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-                <div class="flash {{ category }}">{{ message }}</div>
-            {% endfor %}
+        <!-- Flash Messages Section -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="p-4 rounded-md mb-4 
+                        {% if category == 'success' %}
+                            bg-green-100 text-green-800 border-l-4 border-green-500
+                        {% elif category == 'error' %}
+                            bg-red-100 text-red-800 border-l-4 border-red-500
+                        {% elif category == 'info' %}
+                            bg-blue-100 text-blue-800 border-l-4 border-blue-500
+                        {% else %}
+                            bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500
+                        {% endif %}
+                    ">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+    
+
+        <!-- Contact Form Section -->
+        <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <form action="/submit-contact" method="POST">
+                <div class="mb-5">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your Name">
+                </div>
+
+                <div class="mb-5">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your Email">
+                </div>
+
+                <div class="mb-5">
+                    <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                    <textarea id="message" name="message" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your Message" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300">
+                    Submit
+                </button>
+            </form>
         </div>
-    {% endif %}
-{% endwith %}
-
-<form action="/submit-contact" method="POST" class="contact-form">
-    <div class="form-group">
-        <label for="name" class="form-label">Name:</label>
-        <input type="text" id="name" name="name" required class="form-input" placeholder="Your Name" aria-required="true">
     </div>
-
-    <div class="form-group">
-        <label for="email" class="form-label">Email:</label>
-        <input type="email" id="email" name="email" required class="form-input" placeholder="Your Email" aria-required="true">
-    </div>
-
-    <div class="form-group">
-        <label for="message" class="form-label">Message:</label>
-        <textarea id="message" name="message" required class="form-textarea" placeholder="Your Message" rows="5" aria-required="true"></textarea>
-    </div>
-
-    <button type="submit" class="form-button">Submit</button>
-</form>
+</section>
 {% endblock %}
