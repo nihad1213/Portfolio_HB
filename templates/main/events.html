@@ -3,19 +3,23 @@
 {% block title %}Events{% endblock %}
 
 {% block content %}
-<section class="events-list">
-    <div class="container">
-        <h2>All Events</h2>
-        <div class="events-grid">
+<section class="events-list py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6">All Events</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {% for event in events %}
-            <div class="event-card">
-                <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}">
-                <h3><a href="{{ url_for('main_routes.event_details', event_id=event.id) }}">{{ event.title }}</a></h3>
-                <p>{{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
-                <p>{{ event.description[:100] }}...</p>
+            <div class="event-card bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                        <a href="{{ url_for('main_routes.event_details', event_id=event.id) }}" class="text-blue-600 hover:text-blue-800">{{ event.title }}</a>
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-2">{{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+                    <p class="text-gray-700 text-base">{{ event.description[:100] }}...</p>
+                </div>
             </div>
             {% else %}
-            <p>No events available.</p>
+            <p class="text-center text-gray-600">No events available.</p>
             {% endfor %}
         </div>
     </div>

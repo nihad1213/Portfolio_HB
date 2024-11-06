@@ -9,10 +9,10 @@ headerRoutes = Blueprint('header_routes', __name__)
 
 @headerRoutes.route('/schedule')
 def schedule():
-    return render_template('schedule.html')
+    return render_template('user/schedule.html')
 
 @headerRoutes.route('/chat')
 def chat():
-    return render_template('chat.html')
+    return render_template('user/chat.html')
 
 
