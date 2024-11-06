@@ -3,24 +3,27 @@
 {% block title %}{{ event.title }}{% endblock %}
 
 {% block content %}
-<section class="event-details">
-    <div class="container">
-        <h2>{{ event.title }}</h2>
-        <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}">
-        <p>Date: {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
-        <p>Location: {{ event.location }}</p>
-        <p>{{ event.description }}</p>
-        <p><strong>Likes:</strong> {{ event.likes }}</p>
-        <p><strong>Attendees:</strong> {{ event.attendees }}</p>
+<section class="event-details py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <!-- Event Title -->
+        <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6">{{ event.title }}</h2>
 
-        <!-- Attend and Like Forms -->
-        <form action="{{ url_for('main_routes.attend_event', event_id=event.id) }}" method="POST">
-            <button type="submit" class="btn btn-primary">Attend Event</button>
-        </form>
+        <!-- Event Image -->
+        <div class="mb-6">
+            <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-80 object-cover rounded-lg shadow-lg">
+        </div>
 
-        <form action="{{ url_for('main_routes.like_event', event_id=event.id) }}" method="POST">
-            <button type="submit" class="btn btn-secondary">Like Event</button>
-        </form>
+        <!-- Event Information -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="text-lg text-gray-800 mb-2"><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p class="text-lg text-gray-800 mb-4"><strong>Location:</strong> {{ event.location }}</p>
+            <p class="text-gray-700 text-base leading-relaxed">{{ event.description }}</p>
+        </div>
+
+        <!-- Back Button -->
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('main_routes.events') }}" class="text-blue-600 hover:text-blue-800 font-semibold">Back to Events</a>
+        </div>
     </div>
 </section>
 {% endblock %}

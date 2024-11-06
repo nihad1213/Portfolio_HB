@@ -1,493 +1,178 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-<body>	
-	<div class="section-center">
-		<div class="section-up">
-			<div class="sun">
-				<span></span>
-			</div>
-			<div class="cloud-left">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<section class="hero">
-				<div class="hero-content">
-					<h2>Welcome to the Event App</h2>
-					<a href="{{ url_for('main_routes.events') }}">
-						<button>See Events</button>
-					</a>
-					
-					{% if session['user_id'] %}
-						<!-- If user is logged in, allow access to create event -->
-						<a href="{{ url_for('main_routes.create_event') }}">
-							<button>Create Event</button>
-						</a>
-					{% else %}
-						<!-- If user is not logged in, alert them to log in -->
-						<a href="#" onclick="alert('Please log in to create an event!'); window.location.href='{{ url_for('user_routes.login') }}';">
-							<button>Create Event</button>
-						</a>
-					{% endif %}
-				</div>
-			</section>            
-			<div class="cloud-middle">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="cloud-right">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
 
-			<div class="bird-wrapper">
-				<div class="left-wing">
-					<span></span>
-				</div>
-				<div class="right-wing">
-					<span></span>
-				</div>
-			</div>
-			<div class="bird-wrapper snd">
-				<div class="left-wing">
-					<span></span>
-				</div>
-				<div class="right-wing">
-					<span></span>
-				</div>
-			</div>
-			<div class="bird-wrapper trd">
-				<div class="left-wing">
-					<span></span>
-				</div>
-				<div class="right-wing">
-					<span></span>
-				</div>
-			</div>
-			<div class="building-left">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="building-right">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span><span></span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="left-tree">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="right-tree">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="hill">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="hill snd">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="hill trd">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<div class="hill frt">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-		<div class="section-down">
-			<div class="ship-wrapper">
-				<div class="ship">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-			</div>
+<section class="bg-blue-900 text-white py-20">
+    <div class="container mx-auto flex flex-col items-center text-center">
+        <h2 class="text-4xl font-bold mb-6">
+            Welcome to AzerbaijanFest
+        </h2>
+        <p class="text-lg mb-8 max-w-2xl">
+            Discover and celebrate the best events in Azerbaijan. Join us to experience the culture, excitement, and community events that make AzerbaijanFest unique.
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="{{ url_for('main_routes.events') }}">
+                <button class="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition ease-in-out duration-200">
+                    See Events
+                </button>
+            </a>
             
-			<div class="water-big-wrapper">
-				<div class="water-big-wrap">
-					<div class="water-big">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-                    
-					<div class="water-big snd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="water-big trd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-			<div class="water-lines-wrapper">
-				<div class="water-lines">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-			<div class="water-lines-wrapper right">
-				<div class="water-lines">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-			<div class="fish-wrapper">
-				<div class="fish-wrap">
-					<div class="fish">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-			<div class="fish-wrapper right">
-				<div class="fish-wrap">
-					<div class="fish">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-			<div class="water-wrapper top">
-				<div class="water-wrap">
-					<div class="water">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="water snd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="water trd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-			
-			<div class="water-wrapper">
-				<div class="water-wrap">
-					<div class="water">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="water snd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					
-					<div class="water trd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-			
-			<div class="water-wrapper top right">
-				<div class="water-wrap">
-					<div class="water">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="water snd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="water trd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-			<div class="water-wrapper right">
-				<div class="water-wrap">
-					<div class="water">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					
-					<div class="water snd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="water trd">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-  
-  <!-- Link to profile
-	================================================== -->
-
-  <a href="https://codepen.io/ig_design/" class="link-to-portfolio cursor-link" target=”_blank”></a>
-
-</body>
-
-<!-- Categories Section -->
-
-<!-- Filter Section -->
+            {% if session['user_id'] %}
+                <!-- Create Event button if logged in -->
+                <a href="{{ url_for('main_routes.create_event') }}">
+                    <button class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-2 px-4 rounded-md transition ease-in-out duration-200">
+                        Create Event
+                    </button>
+                </a>
+            {% else %}
+                <!-- Alert and redirect to login if not logged in -->
+                <a href="#" onclick="alert('Please log in to create an event!'); window.location.href='{{ url_for('user_routes.login') }}';">
+                    <button class="bg-gray-500 hover:bg-gray-400 text-white font-semibold py-2 px-4 rounded-md transition ease-in-out duration-200">
+                        Create Event
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
 
 <!-- Featured Events Section -->
-<section class="featured-events">
-    <h2>Featured Events</h2>
+<section class="featured-events bg-gray-100 py-12">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-semibold text-center mb-8">Featured Events</h2>
 
-	<div class="mb-5">
-		<div class="row align-items-center">
-			<div class="col-sm mb-3 mb-sm-0">
-				<h1 class="h2 mb-0"></h1>
-			</div>
-			<div class="parent-container">
-				<div class="col-sm-auto">
-					<select class="form-select form-select-sm">
-						<option value="mostRecent" selected>Most recent</option>
-						<option value="highestPrice">Old posts</option>
-						<option value="lowestPrice">New posts</option>
-						<option value="mostReduced">Popular post</option>
-						<option value="mostPopular">Recently added posts</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-    <!-- Event 1 -->
-	<div class="event-card" data-date="2024-10-10">
-		<div class="event-image">
-			<img src="{{ url_for('static', filename='photos/eventimage.jpg') }}" alt="Event 2">
-			<div class="event-interactions">
-				<button class="attend-button" onclick="attendEvent(event)">Yes, I will attend</button>
-				<button class="like-button" onclick="likeEvent(event)">
-					<span class="material-symbols-outlined">favorite</span> <span class="like-count">75</span>
-				</button>
-				<button class="save-button" onclick="saveEvent(event)">
-					<span class="material-symbols-outlined">bookmark</span>
-				</button>
-			</div>
-		</div>
-		<div class="event-details">
-			<h3>Event 2</h3>
-			<p>Date & Time: October 10, 2024, 7:00 PM</p>
-			<p class="event-description">This is the event description. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout...</p>
-			<p class="description attendance-status"></p> <!-- Added for attendance status -->
-			<p>Attendance: 200 people</p>
-		</div>
-	</div>
-    <!-- Event 2 -->
-	<div class="event-card" data-date="2024-10-10">
-		<div class="event-image">
-			<img src="{{ url_for('static', filename='photos/eventimage.jpg') }}" alt="Event 2">
-			<div class="event-interactions">
-				<button class="attend-button" onclick="attendEvent(event)">Yes, I will attend</button>
-				<button class="like-button" onclick="likeEvent(event)">
-					<span class="material-symbols-outlined">favorite</span> <span class="like-count">75</span>
-				</button>
-				<button class="save-button" onclick="saveEvent(event)">
-					<span class="material-symbols-outlined">bookmark</span>
-				</button>
-			</div>
-		</div>
-		<div class="event-details">
-			<h3>Event 2</h3>
-			<p>Date & Time: October 10, 2024, 7:00 PM</p>
-			<p class="event-description">This is the event description. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout...</p>
-			<p class="description attendance-status"></p> <!-- Added for attendance status -->
-			<p>Attendance: 200 people</p>
-		</div>
-	</div>
-	
-	
+        <!-- Sort and Filter Options -->
+        <div class="flex justify-between items-center mb-5 px-4">
+            <h1 class="text-xl font-semibold">Event Listing</h1>
+            <div class="flex items-center space-x-4">
+                <label for="filter" class="text-gray-700">Sort by:</label>
+                <select id="filter" class="bg-white border border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="mostRecent" selected>Most Recent</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="recentlyAdded">Recently Added</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Event Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+            <!-- Event 1 -->
+            <div class="event-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105 hover:shadow-xl hover:translate-y-2">
+                <div class="event-image relative">
+                    <img src="{{ url_for('static', filename='photos/event1.jpg') }}" alt="Event 1" class="w-full h-56 object-cover">
+                    <div class="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 text-white p-2">
+                        <span class="text-sm">Date: October 10, 2024, 7:00 PM</span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2">Music Festival</h3>
+                    <p class="text-gray-700 mb-4">Join us for an unforgettable night of live music, food, and fun!</p>
+                    <div class="flex justify-between items-center mt-auto">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="attendEvent(event)">Attend</button>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
+                                <i class="fas fa-heart"></i> <span class="like-count">120</span>
+                            </button>
+                            <button class="text-gray-500 hover:text-gray-700" onclick="saveEvent(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="event-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105 hover:shadow-xl hover:translate-y-2">
+                <div class="event-image relative">
+                    <img src="{{ url_for('static', filename='photos/event2.jpg') }}" alt="Event 2" class="w-full h-56 object-cover">
+                    <div class="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 text-white p-2">
+                        <span class="text-sm">Date: November 5, 2024, 6:00 PM</span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2">Tech Conference 2024</h3>
+                    <p class="text-gray-700 mb-4">Explore the latest in tech with industry experts and innovators.</p>
+                    <div class="flex justify-between items-center mt-auto">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="attendEvent(event)">Attend</button>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
+                                <i class="fas fa-heart"></i> <span class="like-count">250</span>
+                            </button>
+                            <button class="text-gray-500 hover:text-gray-700" onclick="saveEvent(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="event-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105 hover:shadow-xl hover:translate-y-2">
+                <div class="event-image relative">
+                    <img src="{{ url_for('static', filename='photos/event3.jpg') }}" alt="Event 3" class="w-full h-56 object-cover">
+                    <div class="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 text-white p-2">
+                        <span class="text-sm">Date: December 15, 2024, 4:00 PM</span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2">Art Expo</h3>
+                    <p class="text-gray-700 mb-4">Discover works from local and international artists at this year's art expo.</p>
+                    <div class="flex justify-between items-center mt-auto">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="attendEvent(event)">Attend</button>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
+                                <i class="fas fa-heart"></i> <span class="like-count">180</span>
+                            </button>
+                            <button class="text-gray-500 hover:text-gray-700" onclick="saveEvent(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- See All Events Button -->
+        <div class="flex justify-center mt-8">
+            <a href="http://127.0.0.1:8000/events" class="inline-block bg-blue-600 text-white py-2 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700">See All Events</a>
+        </div>
+    </div>
 </section>
 
-<section>
-    <div class="become-subscriber">
-        <div class="subscriber-header">
-           <h2>Stay Updated on Events</h2>
+<section class="bg-blue-900 text-white py-16">
+    <div class="container mx-auto text-center px-4">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-3xl font-semibold mb-3">
+                Stay Updated on Events
+            </h2>
         </div>
 
-        <div class="subscriber-paragraph">
-           <p>
-              Signup to get <strong>EXCLUSIVE</strong> updates on upcoming events, workshops, and special offers!
-           </p>
+        <!-- Description -->
+        <div class="mb-8 max-w-xl mx-auto">
+            <p class="text-lg leading-relaxed">
+                Sign up for <strong>EXCLUSIVE</strong> updates on upcoming events, workshops, and special offers delivered directly to your inbox!
+            </p>
         </div>
 
-        <div class="subsriber-input">
-			<form method="POST" action="{{ url_for('main_routes.subscribe') }}">
-				<span><i class="fa-solid fa-envelope"></i></span>
-				<input type="email" name="email" placeholder="Enter your email" required>
-				<button type="submit" name="submit"><i class="fa-brands fa-telegram"></i></button>
-			 </form>
+        <!-- Form -->
+        <div class="flex justify-center">
+            <form method="POST" action="{{ url_for('main_routes.subscribe') }}" class="w-full max-w-md flex items-center space-x-2 bg-white p-2 rounded-lg shadow-sm">
+                <!-- Email Input Section -->
+                <div class="flex items-center w-full space-x-2">
+                    <span><i class="fa-solid fa-envelope text-blue-600"></i></span>
+                    <input type="email" name="email" placeholder="Enter your email" required class="w-full py-1 px-2 border border-blue-500 rounded-md text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" name="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-medium py-1 px-2 rounded-md transition duration-200 ease-in-out focus:ring-2 focus:ring-blue-500">
+                    <i class="fa-brands fa-telegram text-xs"></i>
+                </button>
+            </form>
         </div>
-     </div>
+    </div>
 </section>
+
 {% endblock %}

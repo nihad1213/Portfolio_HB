@@ -3,82 +3,129 @@
 {% block title %}AzerbaijanFest - Frequently Asked Questions{% endblock %}
 
 {% block content %}
-<h2 class="text-4xl font-bold text-center text-gray-900 mb-10">Frequently Asked Questions (FAQs)</h2>
+<section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-6">
+        <!-- Title Section -->
+        <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-8">
+            Frequently Asked Questions (FAQs)
+        </h2>
 
-<div class="faq-container max-w-2xl mx-auto space-y-4">
-    <!-- FAQ Item Template -->
-    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
-        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
-            What is AzerbaijanFest?
-            <span class="float-right transition-transform transform" id="arrow">▼</span>
-        </button>
-        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
-            <p class="text-black">AzerbaijanFest is a cultural celebration that showcases the rich traditions, festivals, and arts of Azerbaijan, connecting locals and visitors through immersive experiences.</p>
+        <!-- FAQ Container -->
+        <div class="space-y-6">
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    What is AzerbaijanFest?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>AzerbaijanFest is a cultural celebration that showcases the rich traditions, festivals, and arts of Azerbaijan, connecting locals and visitors through immersive experiences.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    How can I participate in the events?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>You can participate by checking our events calendar on the website, registering for workshops, or purchasing tickets for concerts and festivals.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    Are there age restrictions for workshops?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>Workshops are designed for all ages. However, some workshops may have specific age recommendations. Please check the individual workshop descriptions for details.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    Can I volunteer for AzerbaijanFest?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>Yes! We welcome volunteers to help with various aspects of the events. Please contact us through the 'Contact Us' section for more information.</p>
+                </div>
+            </div>
+
+            <!-- New FAQ Items -->
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    How can I become a sponsor for AzerbaijanFest?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>To become a sponsor, please reach out to us via the 'Contact Us' section, and we will provide more details on how you can support and be part of AzerbaijanFest.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    Is there an entrance fee for the events?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>Some events may have an entrance fee, while others may be free. Please check the event details on our events page for information regarding tickets and fees.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    Can I bring my pet to the events?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>Pets are generally not allowed at most events for safety and comfort reasons. However, certain outdoor festivals may allow pets. Please refer to individual event details for more information.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question w-full text-left text-lg font-semibold text-blue-600 py-2 px-4 rounded-md bg-gray-100 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between" onclick="toggleAnswer(this)">
+                    How can I get involved with the local community through AzerbaijanFest?
+                    <span class="ml-2">
+                        <i class="fas fa-chevron-right transform transition-transform duration-300 ease-in-out"></i>
+                    </span>
+                </button>
+                <div class="faq-answer mt-2 px-4 py-3 bg-blue-50 rounded-md text-gray-700 hidden">
+                    <p>We encourage individuals to get involved by attending events, volunteering, and joining our workshops. Community members can also help by spreading the word about AzerbaijanFest and promoting cultural engagement in their local areas.</p>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
-        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
-            How can I participate in the events?
-            <span class="float-right transition-transform transform" id="arrow">▼</span>
-        </button>
-        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
-            <p class="text-black">You can participate by checking our events calendar on the website, registering for workshops, or purchasing tickets for concerts and festivals.</p>
-        </div>
-    </div>
-
-    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
-        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
-            Are there age restrictions for workshops?
-            <span class="float-right transition-transform transform" id="arrow">▼</span>
-        </button>
-        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
-            <p class="text-black">Workshops are designed for all ages. However, some workshops may have specific age recommendations. Please check the individual workshop descriptions for details.</p>
-        </div>
-    </div>
-
-    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
-        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
-            Can I volunteer for AzerbaijanFest?
-            <span class="float-right transition-transform transform" id="arrow">▼</span>
-        </button>
-        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
-            <p class="text-black">Yes! We welcome volunteers to help with various aspects of the events. Please contact us through the 'Contact Us' section for more information.</p>
-        </div>
-    </div>
-
-    <!-- Additional FAQ Items -->
-    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
-        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
-            Where can I find the event schedule?
-            <span class="float-right transition-transform transform" id="arrow">▼</span>
-        </button>
-        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
-            <p class="text-black">The event schedule is available on our official website under the 'Events' section. You can browse events by date, category, or location.</p>
-        </div>
-    </div>
-
-    <div class="faq-item border border-gray-200 rounded-lg shadow transition-shadow duration-200 hover:shadow-lg">
-        <button class="faq-question w-full text-left p-3 bg-blue-500 text-white font-semibold text-md focus:outline-none" onclick="toggleAnswer(this)">
-            Is there an entry fee for AzerbaijanFest?
-            <span class="float-right transition-transform transform" id="arrow">▼</span>
-        </button>
-        <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700">
-            <p class="text-black">Entry to some events is free, while others may require a ticket. Please check each event’s details on our website to know if there’s an entry fee.</p>
-        </div>
-    </div>
-</div>
+</section>
 
 <script>
     function toggleAnswer(button) {
         const answer = button.nextElementSibling;
-        const arrow = button.querySelector("#arrow");
+        const icon = button.querySelector('i');
+        answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
 
-        // Toggle answer visibility
-        answer.classList.toggle('hidden');
-        
-        // Rotate the arrow
-        arrow.classList.toggle('rotate-180');
+        if (answer.style.display === 'block') {
+            icon.classList.remove('fa-chevron-right');
+            icon.classList.add('fa-chevron-down');
+        } else {
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-right');
+        }
     }
 </script>
 {% endblock %}

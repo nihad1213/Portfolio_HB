@@ -1,48 +1,72 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-
-<section class="create-event-form">
-    <div class="container">
-        <h2>Create Event</h2>
-        <form id="eventForm" method="POST" enctype="multipart/form-data">
+<section class="create-event-form py-8 bg-gray-50">
+    <div class="container mx-auto max-w-lg bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-center text-blue-600 mb-6">Create Event</h2>
+        
+        <form id="eventForm" method="POST" enctype="multipart/form-data" class="space-y-4">
+            
             <!-- Event Name -->
-            <label for="eventName">Event Name:</label>
-            <input type="text" id="eventName" name="eventName" required>
+            <div class="space-y-2">
+                <label for="eventName" class="block text-lg font-medium text-gray-700">Event Name:</label>
+                <input type="text" id="eventName" name="eventName" required class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
 
             <!-- Description -->
-            <label for="eventDescription">Description:</label>
-            <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
+            <div class="space-y-2">
+                <label for="eventDescription" class="block text-lg font-medium text-gray-700">Description:</label>
+                <textarea id="eventDescription" name="eventDescription" rows="3" required class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
 
             <!-- Date -->
-            <label for="eventDate">Date:</label>
-            <input type="date" id="eventDate" name="eventDate" required>
+            <div class="space-y-2">
+                <label for="eventDate" class="block text-lg font-medium text-gray-700">Date:</label>
+                <input type="date" id="eventDate" name="eventDate" required class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
 
             <!-- Time -->
-            <label for="eventTime">Time:</label>
-            <input type="time" id="eventTime" name="eventTime" required>
+            <div class="space-y-2">
+                <label for="eventTime" class="block text-lg font-medium text-gray-700">Time:</label>
+                <input type="time" id="eventTime" name="eventTime" required class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
 
             <!-- Location -->
-            <label for="eventLocation">Location:</label>
-            <input type="text" id="eventLocation" name="eventLocation" required>
+            <div class="space-y-2">
+                <label for="eventLocation" class="block text-lg font-medium text-gray-700">Location:</label>
+                <input type="text" id="eventLocation" name="eventLocation" required class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Attendees Number -->
+            <div class="space-y-2">
+                <label for="attendeesNumber" class="block text-lg font-medium text-gray-700">Number of Attendees:</label>
+                <input type="number" id="attendeesNumber" name="attendeesNumber" required class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" min="1" placeholder="Enter number of attendees">
+            </div>
 
             <!-- Image Upload -->
-            <label for="eventImage">Upload Image:</label>
-            <input type="file" id="eventImage" name="eventImage" accept="image/*">
+            <div class="space-y-2">
+                <label for="eventImage" class="block text-lg font-medium text-gray-700">Upload Image:</label>
+                <input type="file" id="eventImage" name="eventImage" accept="image/*" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
 
             <!-- Dynamic Categories Dropdown -->
-            <label for="eventCategory">Choose Category:</label>
-            <select id="eventCategory" name="eventCategory" required>
-                <option value="" disabled selected>Select a category</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
+            <div class="space-y-2">
+                <label for="eventCategory" class="block text-lg font-medium text-gray-700">Choose Category:</label>
+                <select id="eventCategory" name="eventCategory" required class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="" disabled selected>Select a category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
             <!-- Create Event Button -->
-            <button type="submit">Create Event</button>
+            <div class="flex justify-center">
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out">
+                    Create Event
+                </button>
+            </div>
         </form>
     </div>
 </section>
-
 {% endblock %}

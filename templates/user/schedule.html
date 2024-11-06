@@ -1,0 +1,113 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FullCalendar Example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+  <style>
+    /* Additional styling to space out calendar from header and footer */
+    #calendar {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container mx-auto p-6">
+    <!-- Title Section -->
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">
+      Calendar View
+    </h2>
+
+    <!-- Calendar Section -->
+    <div id="calendar"></div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,basicWeek,basicDay'
+        },
+        defaultDate: '2016-12-12',
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        events: [
+          {
+            title: 'All Day Event',
+            start: '2016-12-01'
+          },
+          {
+            title: 'Long Event',
+            start: '2016-12-07',
+            end: '2016-12-10'
+          },
+          {
+            id: 999,
+            title: 'Repeating Event',
+            start: '2016-12-09T16:00:00'
+          },
+          {
+            id: 999,
+            title: 'Repeating Event',
+            start: '2016-12-16T16:00:00'
+          },
+          {
+            title: 'Conference',
+            start: '2016-12-11',
+            end: '2016-12-13'
+          },
+          {
+            title: 'Meeting',
+            start: '2016-12-12T10:30:00',
+            end: '2016-12-12T12:30:00'
+          },
+          {
+            title: 'Lunch',
+            start: '2016-12-12T12:00:00'
+          },
+          {
+            title: 'Meeting',
+            start: '2016-12-12T14:30:00'
+          },
+          {
+            title: 'Happy Hour',
+            start: '2016-12-12T17:30:00'
+          },
+          {
+            title: 'Dinner',
+            start: '2016-12-12T20:00:00'
+          },
+          {
+            title: 'Birthday Party',
+            start: '2016-12-13T07:00:00'
+          },
+          {
+            title: 'Click for Google',
+            url: 'https://google.com/',
+            start: '2016-12-28'
+          }
+        ],
+        dayClick: function(date, jsEvent, view) {
+          alert('Clicked on: ' + date.format());
+        },
+        eventClick: function(event, jsEvent, view) {
+          alert('Event: ' + event.title);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+{% endblock %}
