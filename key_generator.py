@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Script for generating flask SECRET_KEY
+# Script for generating flask SECRET_KEY. Need to write in .env
 import os
 import base64
 
