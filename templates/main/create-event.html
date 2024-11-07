@@ -4,7 +4,20 @@
 <section class="create-event-form py-8 bg-gray-50">
     <div class="container mx-auto max-w-lg bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-semibold text-center text-blue-600 mb-6">Create Event</h2>
-        
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+          <div class="space-y-4 mb-6">
+            {% for category, message in messages %}
+              {% if category == 'create-event-success' %}
+                <div class="bg-blue-100 text-blue-700 p-3 rounded-md">{{ message }}</div>
+              {% elif category == 'error-create-event' %}
+                <div class="bg-red-100 text-red-700 p-3 rounded-md">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      
         <form id="eventForm" method="POST" enctype="multipart/form-data" class="space-y-4">
             
             <!-- Event Name -->

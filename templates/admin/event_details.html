@@ -3,21 +3,58 @@
 {% block title %}Event Details{% endblock %}
 
 {% block content %}
-<section class="event-details py-6">
-    <div class="container mx-auto">
-        <h2 class="text-2xl font-semibold mb-4">{{ event.title }}</h2>
-        
-        <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full max-w-md mb-4">
-        
-        <p><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
-        <p><strong>Location:</strong> {{ event.location }}</p>
-        <p><strong>Category:</strong> {{ event.category.name }}</p>
-        <p><strong>Status:</strong> {{ 'Active' if event.status else 'Inactive' }}</p>
-        <p class="mt-4">{{ event.description }}</p>
+<section class="event-details py-12 bg-gray-50">
+    <div class="container mx-auto max-w-5xl px-6 md:px-8">
+        <div class="flex flex-col md:flex-row gap-8 mb-8">
+            <!-- Event Image Section -->
+            <div class="w-full md:w-1/2">
+                <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-80 object-cover rounded-lg shadow-lg border border-gray-200">
+            </div>
+            
+            <!-- Event Information Section -->
+            <div class="w-full md:w-1/2 flex flex-col justify-between space-y-4">
+                <h2 class="text-4xl font-bold text-gray-900">{{ event.title }}</h2>
+                <p class="text-xl text-gray-600">
+                    <strong class="font-medium text-gray-800">Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}
+                </p>
+                <p class="text-xl text-gray-600">
+                    <strong class="font-medium text-gray-800">Location:</strong> {{ event.location }}
+                </p>
+                <p class="text-xl text-gray-600">
+                    <strong class="font-medium text-gray-800">Category:</strong> {{ event.category.name }}
+                </p>
+                <p class="text-xl text-gray-600">
+                    <strong class="font-medium text-gray-800">Status:</strong> 
+                    <span class="font-semibold {{ 'text-green-500' if event.status else 'text-red-500' }}">
+                        {{ 'Active' if event.status else 'Inactive' }}
+                    </span>
+                </p>
 
-        <a href="{{ url_for('admin_routes.admin_events') }}" class="mt-4 inline-block bg-gray-700 text-white px-4 py-2 rounded">
-            Back to Events List
-        </a>
+                <!-- Likes and Capacity -->
+                <div class="flex space-x-8">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xl font-medium text-gray-800">Likes:</span>
+                        <span class="text-lg text-gray-600">{{ event.likes }} people liked this event</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xl font-medium text-gray-800">Capacity:</span>
+                        <span class="text-lg text-gray-600">{{ event.capacity }} people can join</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Description Section -->
+        <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 mb-8">
+            <p class="text-xl text-gray-800">{{ event.description }}</p>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <a href="{{ url_for('admin_routes.admin_events') }}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-500 transition duration-200">
+                Back to Events List
+            </a>
+        </div>
     </div>
 </section>
 {% endblock %}
