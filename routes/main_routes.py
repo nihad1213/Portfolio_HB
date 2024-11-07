@@ -111,23 +111,32 @@ def subscribe():
     email = request.form.get('email')
     
     if not email:
-        flash("Email is required!", "error")
-        return redirect(request.referrer)
+        return '''<script>
+                    alert("Email is required!");
+                    window.location.href = document.referrer;
+                  </script>'''
 
     # Check if email already exists in the database
     existing_subscriber = Subscribers.query.filter_by(email=email).first()
 
     if existing_subscriber:
-        flash("This email is already subscribed!", "warning")
-        return redirect(request.referrer)
+        return '''<script>
+                    alert("This email is already subscribed!");
+                    window.location.href = document.referrer;
+                  </script>'''
 
     # Add new subscriber
     new_subscriber = Subscribers(email=email)
     try:
         new_subscriber.save()
-        flash("Successfully subscribed!", "success")
+        return '''<script>
+                    alert("Successfully subscribed!");
+                    window.location.href = document.referrer;
+                  </script>'''
     except Exception as e:
-        flash("There was an issue adding your email!", "error")
         print(f"Error: {e}")
-    
-    return redirect(request.referrer)
+        return '''<script>
+                    alert("There was an issue adding your email!");
+                    window.location.href = document.referrer;
+                  </script>'''
+
