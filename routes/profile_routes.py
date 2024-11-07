@@ -2,6 +2,7 @@
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from models.User import User, db
+from flask import session
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
 from models.Subscriber import Subscribers 
@@ -203,3 +204,29 @@ def unsubscribe(user_id):
         flash('User not found!', 'danger')
 
     return redirect(url_for('profile_routes.profile', user_id=user.id))
+
+@profileRoutes.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    user_id = session.get('user_id')
+    if not user_id:
+        flash("You must be logged in to change your password.", 'error-change-password')
+        return redirect(url_for('user_routes.login'))
+
+    user = User.query.get(user_id)
+
+    if request.method == 'POST':
+        new_password = request.form['newPassword']
+        confirm_password = request.form['confirmPassword']
+
+        if new_password != confirm_password:
+            flash("Passwords do not match.", 'error-change-password')
+        elif len(new_password) < 5:
+            flash("Password must be at least 5 characters long.", 'error-change-password')
+        else:
+            # Update the user's password
+            user.set_password(new_password)
+            db.session.commit()
+            flash("Your password has been updated successfully!", 'success-change-password')
+            return redirect(url_for('profile_routes.profile', user_id=user.id))
+
+    return render_template('profile/change_password.html')
