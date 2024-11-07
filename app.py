@@ -86,7 +86,8 @@ def apply_waf():
 # Route for the index page
 @app.route('/')
 def index():
-    return render_template('index.html', current_year=get_current_year())
+    events = Event.query.filter_by(status=1).order_by(Event.likes.desc()).limit(3).all()
+    return render_template('index.html', current_year=get_current_year(), events=events)
 
 # Ensure that the database tables are created before the app starts
 if __name__ == "__main__":
