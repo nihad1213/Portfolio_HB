@@ -4,9 +4,14 @@ import os
 from flask import Blueprint, render_template, request, redirect, flash, url_for
 from werkzeug.utils import secure_filename
 from models.Event import Event
+from models.Admin import Admin
 from models.Category import Category
 from models.Subscriber import Subscribers
 from db import db
+from flask_mail import Message, Mail
+from flask import flash
+
+mail = Mail()
 
 # Allowed image files
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -32,7 +37,7 @@ def create_event():
         event_time = request.form.get('eventTime')
         event_location = request.form.get('eventLocation')
         event_category = request.form.get('eventCategory')
-        attendees_number = request.form.get('attendeesNumber')  # New field
+        attendees_number = request.form.get('attendeesNumber')
 
         # Handle image upload
         file = request.files.get('eventImage')
@@ -46,7 +51,7 @@ def create_event():
 
         # Save event in the database (status is set to inactive by default)
         try:
-            category = Category.query.filter_by(id=event_category).first()  # Fetch category from DB
+            category = Category.query.filter_by(id=event_category).first()
             new_event = Event(
                 title=event_name,
                 date=f"{event_date} {event_time}",
@@ -55,18 +60,35 @@ def create_event():
                 image=filename,
                 description=event_description,
                 status=False,  # Default inactive status
-                capacity=int(attendees_number)  # Save capacity
+                capacity=int(attendees_number)
             )
             db.session.add(new_event)
             db.session.commit()
-            flash("Event created successfully!", "success")
+
+            # Fetch admins to send notification
+            admins = Admin.query.all()
+
+            for admin in admins:
+                # Create the email content
+                msg = Message(
+                    subject="New Event Waiting for Approval",
+                    recipients=[admin.email],
+                    body=f"A new event '{event_name}' has been created and is awaiting approval. Please review it in the admin panel."
+                )
+                try:
+                    # Send email to each admin
+                    mail.send(msg)
+                except Exception as e:
+                    flash(f"Error sending email: {e}", "error")
+                    break
+
+            flash("Event created successfully! Waiting for admin approval.", "create-event-success")
         except Exception as e:
             db.session.rollback()
             flash(f"Error creating event: {e}", "error")
-
+        
         return redirect(url_for('main_routes.events'))
 
-    # Fetch categories from the database to populate the dropdown
     categories = Category.query.all()
     return render_template('main/create-event.html', categories=categories)
 

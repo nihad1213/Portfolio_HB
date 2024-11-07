@@ -4,7 +4,19 @@
 <section class="create-event-form py-8 bg-gray-50">
     <div class="container mx-auto max-w-lg bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-semibold text-center text-blue-600 mb-6">Create Event</h2>
-        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+            {% if category == 'create-event-success' %}
+                <li class="flash-success">{{ message }}</li>
+            {% else %}
+                <li>{{ message }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         <form id="eventForm" method="POST" enctype="multipart/form-data" class="space-y-4">
             
             <!-- Event Name -->
