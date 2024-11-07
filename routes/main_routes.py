@@ -32,7 +32,8 @@ def create_event():
         event_time = request.form.get('eventTime')
         event_location = request.form.get('eventLocation')
         event_category = request.form.get('eventCategory')
-        
+        attendees_number = request.form.get('attendeesNumber')  # New field
+
         # Handle image upload
         file = request.files.get('eventImage')
         if file and allowed_file(file.filename):
@@ -53,7 +54,8 @@ def create_event():
                 category=category,
                 image=filename,
                 description=event_description,
-                status=False  # Default inactive status
+                status=False,  # Default inactive status
+                capacity=int(attendees_number)  # Save capacity
             )
             db.session.add(new_event)
             db.session.commit()

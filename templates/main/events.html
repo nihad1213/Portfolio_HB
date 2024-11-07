@@ -8,14 +8,33 @@
         <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6">All Events</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {% for event in events %}
-            <div class="event-card bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-48 object-cover rounded-t-lg">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            <div class="event-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105 hover:shadow-xl hover:translate-y-2">
+                <div class="event-image relative">
+                    <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-48 object-cover">
+                    <div class="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 text-white p-2">
+                        <span class="text-sm">{{ event.date.strftime('%Y-%m-%d %H:%M') }}</span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2">
                         <a href="{{ url_for('main_routes.event_details', event_id=event.id) }}" class="text-blue-600 hover:text-blue-800">{{ event.title }}</a>
                     </h3>
-                    <p class="text-sm text-gray-600 mb-2">{{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
-                    <p class="text-gray-700 text-base">{{ event.description[:100] }}...</p>
+                    <p class="text-gray-700 mb-4">{{ event.description[:100] }}...</p>
+                    <div class="flex justify-between items-center mt-auto">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="attendEvent(event)">Attend</button>
+                        <div class="flex space-x-2">
+                            <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
+                                <i class="fas fa-heart"></i> <span class="like-count">120</span> <!-- Example like count -->
+                            </button>
+                            <button class="text-gray-500 hover:text-gray-700" onclick="saveEvent(event)">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- See Details Link -->
+                    <div class="mt-4 text-center">
+                        <a href="{{ url_for('main_routes.event_details', event_id=event.id) }}" class="text-blue-600 hover:text-blue-700 text-sm font-semibold">See Details</a>
+                    </div>
                 </div>
             </div>
             {% else %}

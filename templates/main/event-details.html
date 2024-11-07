@@ -5,24 +5,60 @@
 {% block content %}
 <section class="event-details py-8 bg-gray-50">
     <div class="container mx-auto px-4">
-        <!-- Event Title -->
-        <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6">{{ event.title }}</h2>
+        <!-- Event Header -->
+        <h2 class="text-4xl font-semibold text-center text-blue-600 mb-6">{{ event.title }}</h2>
 
         <!-- Event Image -->
         <div class="mb-6">
-            <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-80 object-cover rounded-lg shadow-lg">
+            <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-96 object-cover rounded-lg shadow-xl">
         </div>
 
-        <!-- Event Information -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <p class="text-lg text-gray-800 mb-2"><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
-            <p class="text-lg text-gray-800 mb-4"><strong>Location:</strong> {{ event.location }}</p>
-            <p class="text-gray-700 text-base leading-relaxed">{{ event.description }}</p>
+        <!-- Event Information Section -->
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <div class="flex flex-col md:flex-row md:space-x-8">
+                <div class="md:w-1/2">
+                    <!-- Event Date -->
+                    <p class="text-xl font-semibold text-gray-800 mb-2"><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+                    
+                    <!-- Event Location -->
+                    <p class="text-xl font-semibold text-gray-800 mb-4"><strong>Location:</strong> {{ event.location }}</p>
+
+                    <!-- Event Description -->
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">{{ event.description }}</p>
+
+                    <!-- Event Actions: Attend, Like, Save -->
+                    <div class="flex space-x-4 mb-4">
+                        <button class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200">Attend</button>
+                        <button class="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition duration-200">
+                            <i class="fas fa-heart"></i> Like
+                        </button>
+                        <button class="bg-gray-500 text-white px-6 py-3 rounded-md hover:bg-gray-600 transition duration-200">
+                            <i class="fas fa-bookmark"></i> Save
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event Details (Optional) -->
+                <div class="md:w-1/2 mt-6 md:mt-0">
+                    <!-- Additional Event Information, e.g. Capacity, Attendees, etc. -->
+                    <div class="bg-gray-100 p-4 rounded-md shadow-md mb-4">
+                        <p class="text-lg text-gray-800"><strong>Capacity:</strong> {{ event.capacity }}</p>
+                        <p class="text-lg text-gray-800"><strong>Attendees:</strong> {{ event.attendees }}</p>
+                    </div>
+
+                    <!-- Likes Count -->
+                    <div class="flex items-center space-x-2">
+                        <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
+                            <i class="fas fa-heart"></i> <span class="like-count">{{ event.likes }}</span> Likes
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Back Button -->
         <div class="mt-6 text-center">
-            <a href="{{ url_for('main_routes.events') }}" class="text-blue-600 hover:text-blue-800 font-semibold">Back to Events</a>
+            <a href="{{ url_for('main_routes.events') }}" class="text-blue-600 hover:text-blue-800 font-semibold text-lg">Back to Events</a>
         </div>
     </div>
 </section>
