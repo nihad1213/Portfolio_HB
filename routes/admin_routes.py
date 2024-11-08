@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, session
 from flask_mail import Message, Mail
 from models.Admin import Admin
 from models.Subscriber import Subscribers
@@ -34,7 +34,8 @@ def admin_index():
         admin = db.session.query(Admin).filter_by(username=username, email=email).first()
         
         if admin and admin.check_password(password):
-            # If the admin exists and the password matches, redirect to dashboard
+            # If the admin exists and the password matches, store their ID in session
+            session['admin_username'] = admin.username
             return redirect(url_for('admin_routes.dashboard'))
         else:
             # If not, flash an error message
@@ -46,7 +47,12 @@ def admin_index():
 # Get dashboard
 @adminRoutes.route('/admin-dashboard')
 def dashboard():
-    return render_template('admin/dashboard.html')
+    # Retrieve the logged-in admin's username from session
+    username = session.get('admin_username', "Admin")
+    
+    # Pass the username to the template
+    return render_template('admin/dashboard.html', username=username)
+
 
 # Admin Routes
 

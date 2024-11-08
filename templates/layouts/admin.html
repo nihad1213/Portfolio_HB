@@ -31,19 +31,17 @@
     <div class="flex-1 flex flex-col">
         <!-- Navbar -->
         <nav class="bg-white shadow-md px-4 py-4 flex justify-between items-center">
-            <div class="text-lg">Welcome, Admin</div>
+            <div class="text-lg">Welcome, {{ username }}</div>
             <div class="relative">
                 <!-- User Dropdown -->
                 <button class="flex items-center space-x-2 focus:outline-none" id="userMenuButton">
                     <span>User</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg id="userMenuArrow" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
                     </svg>
                 </button>
                 <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                    <a href="/" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Go to Homepage</a>
                 </div>
             </div>
         </nav>
@@ -60,9 +58,11 @@
         // User dropdown toggle logic
         const userMenuButton = document.getElementById('userMenuButton');
         const userMenu = document.getElementById('userMenu');
+        const userMenuArrow = document.getElementById('userMenuArrow');
         
         userMenuButton.addEventListener('click', () => {
             userMenu.classList.toggle('hidden');
+            userMenuArrow.classList.toggle('rotate-180'); // Rotate arrow when dropdown is shown
         });
     </script>
 </body>
