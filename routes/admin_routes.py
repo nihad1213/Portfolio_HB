@@ -94,7 +94,6 @@ def admin_list():
     search_query = request.args.get('search', '')
     page = request.args.get('page', 1, type=int)
     
-    # Query the Admin model and filter by search query if it exists
     query = Admin.query
     if search_query:
         query = query.filter(
@@ -102,16 +101,14 @@ def admin_list():
             (Admin.email.ilike(f'%{search_query}%'))
         )
     
-    # Paginate the query results
-    per_page = 7  # Number of admins per page
+    per_page = 7
     admins = query.paginate(page=page, per_page=per_page, error_out=False)
     
-    # Total pages calculation (optional: if you want to use it for a custom display)
     total_pages = admins.pages
     
     return render_template(
         'admin/admins.html', 
-        admins=admins.items,  # admins.items gives you the current page's admins
+        admins=admins.items,
         page=page, 
         total_pages=total_pages,
         search_query=search_query
@@ -221,16 +218,14 @@ def list_categories():
     search_query = request.args.get('search', '')
     page = request.args.get('page', 1, type=int)
 
-    # Query the Category model and filter by search query if it exists
     query = Category.query
     if search_query:
         query = query.filter(Category.name.ilike(f'%{search_query}%'))
 
-    # Paginate the query results
-    per_page = 5  # Number of categories per page
+    
+    per_page = 5
     categories = query.paginate(page=page, per_page=per_page, error_out=False)
 
-    # Total pages calculation (optional: if you want to use it for a custom display)
     total_pages = categories.pages
 
     return render_template(
@@ -287,25 +282,21 @@ def delete_category(category_id):
 # Route to list all events
 @adminRoutes.route('/admin/events')
 def admin_events():
-    # Get the search query and page number from request
     search_query = request.args.get('search', '')
     page = request.args.get('page', 1, type=int)
     
-    # Query the Event model and filter by search query if it exists
     query = Event.query
     if search_query:
         query = query.filter(Event.title.ilike(f'%{search_query}%'))
     
-    # Paginate the query results
-    per_page = 10  # Number of events per page
+    per_page = 10
     events = query.paginate(page=page, per_page=per_page, error_out=False)
     
-    # Total pages calculation (optional: if you want to use it for a custom display)
     total_pages = events.pages
     
     return render_template(
         'admin/events.html', 
-        events=events.items,  # events.items gives you the current page's events
+        events=events.items,
         page=page, 
         total_pages=total_pages,
         search_query=search_query
