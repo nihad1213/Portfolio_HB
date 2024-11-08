@@ -6,7 +6,16 @@
 <section class="admin-events-list py-6">
     <div class="container mx-auto">
         <h2 class="text-2xl font-semibold mb-4">Manage Events</h2>
-        
+
+        <!-- Search Form (aligned to the right) -->
+        <div class="flex justify-end mb-4">
+            <form method="GET" action="{{ url_for('admin_routes.admin_events') }}" class="flex space-x-2">
+                <input type="text" name="search" placeholder="Search by Event Name" value="{{ search_query }}" class="border p-2" />
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+            </form>
+        </div>
+
+        <!-- Events Table -->
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
@@ -19,13 +28,13 @@
                 {% for event in events %}
                 <tr class="transition duration-300 ease-in-out hover:bg-gray-100">
                     <td class="px-4 py-2 border-b text-center">{{ event.title }}</td>
-                    <td class="px-4 py-2 border-b text-center">
+                    <td class="px-2 py-2 border-b text-center">
                         <form action="{{ url_for('admin_routes.toggle_event_status', event_id=event.id) }}" method="POST" class="inline">
                             <label class="switch">
                                 <input type="checkbox" onchange="this.form.submit()" {{ 'checked' if event.status else '' }}>
                                 <span class="slider round"></span>
                             </label>
-                            <span class="ml-2 {{ 'text-green-500' if event.status else 'text-red-500' }}">
+                            <span class="ml-1 text-sm {{ 'text-green-500' if event.status else 'text-red-500' }}">
                                 {{ 'Active' if event.status else 'Inactive' }}
                             </span>
                         </form>
@@ -37,7 +46,22 @@
                 {% endfor %}
             </tbody>
         </table>
-        
+
+        <!-- Pagination Controls -->
+        <div class="flex justify-between items-center mt-4">
+            <div>
+                <span>Page {{ page }} of {{ total_pages }}</span>
+            </div>
+            <div>
+                {% if page > 1 %}
+                    <a href="{{ url_for('admin_routes.admin_events', page=page-1, search=search_query) }}" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</a>
+                {% endif %}
+                {% if page < total_pages %}
+                    <a href="{{ url_for('admin_routes.admin_events', page=page+1, search=search_query) }}" class="bg-gray-500 text-white px-4 py-2 rounded">Next</a>
+                {% endif %}
+            </div>
+        </div>
+
         {% if not events %}
         <p class="text-center mt-4">No events found</p>
         {% endif %}
@@ -45,12 +69,11 @@
 </section>
 
 <style>
-    /* Updated Toggle switch styles */
     .switch {
         position: relative;
         display: inline-block;
-        width: 60px;
-        height: 34px;
+        width: 50px;
+        height: 28px;
         vertical-align: middle;
     }
     .switch input {
@@ -72,8 +95,8 @@
     .slider:before {
         position: absolute;
         content: "";
-        height: 26px;
-        width: 26px;
+        height: 20px;
+        width: 20px; 
         left: 4px;
         bottom: 4px;
         background-color: white;
@@ -84,7 +107,7 @@
         background-color: #4CAF50;
     }
     input:checked + .slider:before {
-        transform: translateX(26px);
+        transform: translateX(22px);
     }
     .switch input:focus + .slider {
         box-shadow: 0 0 1px #4CAF50;

@@ -55,7 +55,6 @@ def dashboard():
 
 
 # Admin Routes
-
 # Route to handle adding a new admin
 @adminRoutes.route('/admin/add', methods=['POST'])
 def add_admin():
@@ -80,6 +79,7 @@ def add_admin():
 # Display all admins and allow adding a new admin
 @adminRoutes.route('/admins', methods=['GET', 'POST'])
 def admin_list():
+    # Handle form submission to add a new admin
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
@@ -90,8 +90,29 @@ def admin_list():
         flash('Admin added successfully!', 'success')
         return redirect(url_for('admin_routes.admin_list'))
     
-    admins = Admin.query.all()
-    return render_template('admin/admins.html', admins=admins)
+    # Get search query and page number from request
+    search_query = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    
+    query = Admin.query
+    if search_query:
+        query = query.filter(
+            (Admin.username.ilike(f'%{search_query}%')) |
+            (Admin.email.ilike(f'%{search_query}%'))
+        )
+    
+    per_page = 7
+    admins = query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    total_pages = admins.pages
+    
+    return render_template(
+        'admin/admins.html', 
+        admins=admins.items,
+        page=page, 
+        total_pages=total_pages,
+        search_query=search_query
+    )
 
 # Edit admin
 @adminRoutes.route('/admin/edit/<string:admin_id>', methods=['GET', 'POST'])
@@ -165,6 +186,7 @@ def send_message():
 
     return render_template('admin/send-message.html')
 
+# Add Category
 @adminRoutes.route('/categories/add', methods=['GET', 'POST'])
 def add_category():
     if request.method == 'POST':
@@ -190,10 +212,29 @@ def add_category():
     return render_template('admin/add-category.html')
 
 # List Categories Route
-@adminRoutes.route('/categories')
+@adminRoutes.route('/categories', methods=['GET'])
 def list_categories():
-    categories = Category.query.all()
-    return render_template('admin/categories.html', categories=categories)
+    # Get search query and page number from the request
+    search_query = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+
+    query = Category.query
+    if search_query:
+        query = query.filter(Category.name.ilike(f'%{search_query}%'))
+
+    
+    per_page = 5
+    categories = query.paginate(page=page, per_page=per_page, error_out=False)
+
+    total_pages = categories.pages
+
+    return render_template(
+        'admin/categories.html',
+        categories=categories.items,
+        page=page,
+        total_pages=total_pages,
+        search_query=search_query
+    )
 
 # Edit Category Route
 @adminRoutes.route('/categories/edit/<string:category_id>', methods=['GET', 'POST'])
@@ -241,8 +282,25 @@ def delete_category(category_id):
 # Route to list all events
 @adminRoutes.route('/admin/events')
 def admin_events():
-    events = Event.query.all()
-    return render_template('admin/events.html', events=events)
+    search_query = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    
+    query = Event.query
+    if search_query:
+        query = query.filter(Event.title.ilike(f'%{search_query}%'))
+    
+    per_page = 10
+    events = query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    total_pages = events.pages
+    
+    return render_template(
+        'admin/events.html', 
+        events=events.items,
+        page=page, 
+        total_pages=total_pages,
+        search_query=search_query
+    )
 
 # Route to display event details
 @adminRoutes.route('/admin/event/<uuid:event_id>')

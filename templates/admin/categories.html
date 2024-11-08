@@ -4,9 +4,18 @@
 {% block content %}
 <h1 class="text-2xl font-semibold mb-4">Categories</h1>
 
+<!-- Search Form (Aligned to the Right) -->
+<div class="mb-4 flex justify-end space-x-2">
+    <form method="GET" action="{{ url_for('admin_routes.list_categories') }}" class="flex space-x-2">
+        <input type="text" name="search" placeholder="Search by Category Name" value="{{ search_query }}" class="border p-2" />
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+    </form>
+</div>
+
 <!-- Add Category Button -->
 <a href="{{ url_for('admin_routes.add_category') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Add Category</a>
 
+<!-- Categories Table -->
 <table class="table-auto w-full border-collapse">
     <thead>
         <tr class="bg-gray-200 text-left">
@@ -30,4 +39,20 @@
         {% endfor %}
     </tbody>
 </table>
+
+<!-- Pagination Controls -->
+<div class="flex justify-between items-center mt-4">
+    <div>
+        <span>Page {{ page }} of {{ total_pages }}</span>
+    </div>
+    <div>
+        {% if page > 1 %}
+            <a href="{{ url_for('admin_routes.list_categories', page=page-1, search=search_query) }}" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</a>
+        {% endif %}
+        {% if page < total_pages %}
+            <a href="{{ url_for('admin_routes.list_categories', page=page+1, search=search_query) }}" class="bg-gray-500 text-white px-4 py-2 rounded">Next</a>
+        {% endif %}
+    </div>
+</div>
+
 {% endblock %}
