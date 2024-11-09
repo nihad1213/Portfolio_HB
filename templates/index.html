@@ -71,8 +71,8 @@
                     <div class="flex justify-between items-center mt-auto">
                         <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="attendEvent(event)">Attend</button>
                         <div class="flex space-x-2">
-                            <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
-                                <i class="fas fa-heart"></i> <span class="like-count">{{ event.likes }}</span>
+                            <button class="text-red-500 hover:text-red-700" onclick="likeEvent('{{ event.id }}')">
+                                <i class="fas fa-heart"></i> <span id="like-count-{{ event.id }}">{{ event.likes }}</span>
                             </button>
                             <button class="text-gray-500 hover:text-gray-700" onclick="saveEvent(event)">
                                 <i class="fas fa-bookmark"></i>
@@ -94,4 +94,48 @@
         </div>
     </div>
 </section>
+
+<script>
+function likeEvent(eventId, buttonElement) {
+    fetch(`/like_event/${eventId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                if (response.status === 403) {
+                    alert("Please log in to like the event");
+                    window.location.href = "{{ url_for('user_routes.login') }}";
+                    return;
+                }
+                throw new Error('Network response was not ok');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Update like count
+            const likeCountElem = document.querySelector(`#like-count-${eventId}`);
+            if (likeCountElem) {
+                likeCountElem.textContent = data.likes;
+            }
+            
+            // Toggle liked class for visual feedback
+            buttonElement.classList.toggle('liked');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
+
 {% endblock %}
+
+

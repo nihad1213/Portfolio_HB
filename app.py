@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Import necessary modules
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_mysqldb import MySQL
 import os
 from flask_mail import Mail
@@ -58,6 +58,7 @@ from models.Chat import Chat
 from models.Event import Event
 from models.Ticket import Ticket
 from models.Subscriber import Subscribers
+from models.Like import Like
 
 # Import routes
 from routes.footer_routes import footerRoutes, get_current_year
@@ -66,6 +67,7 @@ from routes.header_routes import headerRoutes
 from routes.main_routes import mainRoutes
 from routes.profile_routes import profileRoutes
 from routes.admin_routes import adminRoutes
+from routes.event_routes import event_routes
 
 # Registering blueprints for different route modules
 app.register_blueprint(footerRoutes)
@@ -74,6 +76,7 @@ app.register_blueprint(headerRoutes)
 app.register_blueprint(mainRoutes)
 app.register_blueprint(profileRoutes)
 app.register_blueprint(adminRoutes)
+app.register_blueprint(event_routes)
 
 # Apply WAF Middleware to all incoming requests
 @app.before_request
@@ -87,7 +90,16 @@ def apply_waf():
 @app.route('/')
 def index():
     events = Event.query.filter_by(status=1).order_by(Event.likes.desc()).limit(3).all()
-    return render_template('index.html', current_year=get_current_year(), events=events)
+    
+    # Get user's liked events
+    user_liked_events = set()
+    if 'user_id' in session:
+        likes = Like.query.filter_by(user_id=session['user_id']).all()
+        user_liked_events = {like.event_id for like in likes}
+    
+    return render_template('index.html', 
+                         events=events, 
+                         user_liked_events=user_liked_events)
 
 # Ensure that the database tables are created before the app starts
 if __name__ == "__main__":
