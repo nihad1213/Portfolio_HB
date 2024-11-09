@@ -23,8 +23,9 @@
                     <div class="flex justify-between items-center mt-auto">
                         <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="attendEvent(event)">Attend</button>
                         <div class="flex space-x-2">
-                            <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
-                                <i class="fas fa-heart"></i> <span class="like-count">120</span> <!-- Example like count -->
+                            <!-- Dynamic Like Button -->
+                            <button id="like-button-{{ event.id }}" class="text-{{ 'red' if event.is_liked else 'gray' }}-500 hover:text-red-700" onclick="likeEvent('{{ event.id }}', this)">
+                                <i class="fas fa-heart"></i> <span id="like-count-{{ event.id }}">{{ event.likes }}</span>
                             </button>
                             <button class="text-gray-500 hover:text-gray-700" onclick="saveEvent(event)">
                                 <i class="fas fa-bookmark"></i>
@@ -41,6 +42,68 @@
             <p class="text-center text-gray-600">No events available.</p>
             {% endfor %}
         </div>
+
+        <!-- Pagination Controls -->
+        <div class="mt-6 text-center">
+            <div class="pagination">
+                {% if pagination.has_prev %}
+                <a href="{{ url_for('main_routes.events', page=pagination.prev_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-800">Previous</a>
+                {% endif %}
+                
+                <span class="mx-2 text-gray-600">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+                
+                {% if pagination.has_next %}
+                <a href="{{ url_for('main_routes.events', page=pagination.next_num) }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-800">Next</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </section>
+
+<script>
+    function likeEvent(eventId, buttonElement) {
+        fetch(`/like_event/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    if (response.status === 403) {
+                        alert("Please log in to like the event");
+                        window.location.href = "{{ url_for('user_routes.login') }}";
+                        return;
+                    }
+                    throw new Error('Network response was not ok');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Update like count
+                const likeCountElem = document.querySelector(`#like-count-${eventId}`);
+                if (likeCountElem) {
+                    likeCountElem.textContent = data.likes;
+                }
+    
+                // Toggle the liked class for visual feedback
+                const likeButtonElem = document.querySelector(`#like-button-${eventId}`);
+                if (likeButtonElem) {
+                    // Toggle text color based on like state
+                    likeButtonElem.classList.toggle('text-red-500');
+                    likeButtonElem.classList.toggle('text-gray-500');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
 {% endblock %}
