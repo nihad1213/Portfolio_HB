@@ -8,6 +8,7 @@ from models.Admin import Admin
 from models.Like import Like
 from models.Category import Category
 from models.Subscriber import Subscribers
+from models.SavedEvent import SavedEvent
 from db import db
 from flask_mail import Message, Mail
 from flask import flash
@@ -102,13 +103,13 @@ def events():
     # Paginate the events query
     events_paginated = Event.query.paginate(page=page, per_page=per_page, error_out=False)
     
-    # Add 'is_liked' attribute to each event
+    # Add 'is_liked' and 'is_saved' attributes to each event
     for event in events_paginated.items:
         event.is_liked = Like.query.filter_by(user_id=user_id, event_id=event.id).first() is not None
+        event.is_saved = SavedEvent.query.filter_by(user_id=user_id, event_id=event.id).first() is not None
     
     # Pass the events and pagination data to the template
     return render_template('main/events.html', events=events_paginated.items, pagination=events_paginated)
-
 
 @mainRoutes.route('/event/<uuid:event_id>')
 def event_details(event_id):

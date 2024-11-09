@@ -79,8 +79,10 @@
                                     onclick="likeEvent('{{ event.id }}', this)">
                                 <i class="fas fa-heart"></i> <span id="like-count-{{ event.id }}">{{ event.likes }}</span>
                             </button>
-                            <button class="text-gray-500 hover:text-gray-700" onclick="saveEvent(event)">
-                                <i class="fas fa-bookmark"></i>
+                            <button id="save-button-{{ event.id }}" 
+                                    class="text-{{ 'blue' if event.is_saved else 'gray' }}-500 hover:text-{{ 'blue' if event.is_saved else 'gray' }}-700" 
+                                    onclick="saveEvent('{{ event.id }}', this)">
+                                <i class="fas fa-bookmark"></i> <span id="save-count-{{ event.id }}">{{ event.saved_by }}</span>
                             </button>
                         </div>
                     </div>
@@ -100,6 +102,48 @@
         </div>
     </div>
 </section>
+<script>
+    function saveEvent(eventId, buttonElement) {
+    fetch(`/save_event/${eventId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                if (response.status === 403) {
+                    // Only show alert once
+                    if (!sessionStorage.getItem("alerted")) {
+                        alert("Please log in to save the event");
+                        sessionStorage.setItem("alerted", "true");
+                        window.location.href = "{{ url_for('user_routes.login') }}";
+                    }
+                    return;
+                }
+                throw new Error('Network response was not ok');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Update save count and toggle saved state
+            const saveCountElem = document.querySelector(`#save-count-${eventId}`);
+            if (saveCountElem) {
+                saveCountElem.textContent = data.saved_count;
+            }
+            buttonElement.classList.toggle('saved');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+    }
+</script>
 
 <script>
 function likeEvent(eventId, buttonElement) {
