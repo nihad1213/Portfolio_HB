@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import os
-from flask import Blueprint, render_template, request, redirect, flash, url_for
+from flask import Blueprint, render_template, request, redirect, flash, url_for, session
 from werkzeug.utils import secure_filename
 from models.Event import Event
 from models.Admin import Admin
+from models.Like import Like
 from models.Category import Category
 from models.Subscriber import Subscribers
 from db import db
@@ -94,8 +95,20 @@ def create_event():
 
 @mainRoutes.route('/events')
 def events():
-    events = Event.query.filter_by(status=True).all()
-    return render_template('main/events.html', events=events)
+    user_id = session.get('user_id')
+    page = request.args.get('page', 1, type=int)  # Default to page 1
+    per_page = 8  # Number of events per page
+    
+    # Paginate the events query
+    events_paginated = Event.query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    # Add 'is_liked' attribute to each event
+    for event in events_paginated.items:
+        event.is_liked = Like.query.filter_by(user_id=user_id, event_id=event.id).first() is not None
+    
+    # Pass the events and pagination data to the template
+    return render_template('main/events.html', events=events_paginated.items, pagination=events_paginated)
+
 
 @mainRoutes.route('/event/<uuid:event_id>')
 def event_details(event_id):
