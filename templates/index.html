@@ -105,14 +105,12 @@
 
 <script>
 function attendEvent(eventId) {
-    // You can now use eventId to send the POST request
     fetch(`/attend_event/${eventId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            // Any data you need to send (e.g., user details if necessary)
         }),
     })
     .then(response => response.json())
