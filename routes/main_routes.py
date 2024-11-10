@@ -178,3 +178,16 @@ def subscribe():
                     window.location.href = document.referrer;
                   </script>'''
 
+@mainRoutes.route('/search')
+def search():
+    query = request.args.get('query', '')
+    if query:
+        # Assuming title and description fields for the Event model
+        events = Event.query.filter(
+            (Event.title.ilike(f"%{query}%")) | 
+            (Event.description.ilike(f"%{query}%"))
+        ).all()
+    else:
+        events = []
+    
+    return render_template('main/search.html', events=events, query=query)

@@ -1,0 +1,159 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-semibold text-center mb-8">Search Results for "{{ query }}"</h2>
+
+        {% if events %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+                {% for event in events %}
+                <div class="event-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105 hover:shadow-xl hover:translate-y-2">
+                    <div class="event-image relative">
+                        <img src="{{ url_for('static', filename='event/' ~ event.image) }}" alt="{{ event.title }}" class="w-full h-48 object-cover">
+                        <div class="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 text-white p-2">
+                            <span class="text-sm">{{ event.date.strftime('%Y-%m-%d %H:%M') }}</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">
+                            <a href="{{ url_for('main_routes.event_details', event_id=event.id) }}" class="text-blue-600 hover:text-blue-800">{{ event.title }}</a>
+                        </h3>
+                        <p class="text-gray-700 mb-4">{{ event.description[:100] }}...</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="attendEvent('{{ event.id }}')">Attend</button>
+                            <div class="flex space-x-2">
+                                <button id="like-button-{{ event.id }}" 
+                                        class="text-{{ 'red' if event.is_liked else 'gray' }}-500 hover:text-{{ 'red' if event.is_liked else 'gray' }}-700" 
+                                        onclick="likeEvent('{{ event.id }}', this)">
+                                    <i class="fas fa-heart"></i> <span id="like-count-{{ event.id }}">{{ event.likes }}</span>
+                                </button>
+                                <button id="save-button-{{ event.id }}" 
+                                        class="text-{{ 'blue' if event.is_saved else 'gray' }}-500 hover:text-{{ 'blue' if event.is_saved else 'gray' }}-700" 
+                                        onclick="saveEvent('{{ event.id }}', this)">
+                                    <i class="fas fa-bookmark"></i> <span id="save-count-{{ event.id }}">{{ event.saved_by }}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <a href="{{ url_for('main_routes.event_details', event_id=event.id) }}" class="text-blue-600 hover:text-blue-700 text-sm font-semibold">See Details</a>
+                        </div>
+                    </div>
+                </div>            
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-600">No events found for "{{ query }}".</p>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+    function attendEvent(eventId) {
+        fetch(`/attend_event/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message); // Success message
+            } else {
+                alert(data.message); // Error message
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    
+    </script>
+    <script>
+        function saveEvent(eventId, buttonElement) {
+        fetch(`/save_event/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    if (response.status === 403) {
+                        // Only show alert once
+                        if (!sessionStorage.getItem("alerted")) {
+                            alert("Please log in to save the event");
+                            sessionStorage.setItem("alerted", "true");
+                            window.location.href = "{{ url_for('user_routes.login') }}";
+                        }
+                        return;
+                    }
+                    throw new Error('Network response was not ok');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Update save count and toggle saved state
+                const saveCountElem = document.querySelector(`#save-count-${eventId}`);
+                if (saveCountElem) {
+                    saveCountElem.textContent = data.saved_count;
+                }
+                buttonElement.classList.toggle('saved');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        }
+    </script>
+    
+    <script>
+    function likeEvent(eventId, buttonElement) {
+        fetch(`/like_event/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    if (response.status === 403) {
+                        alert("Please log in to like the event");
+                        window.location.href = "{{ url_for('user_routes.login') }}";
+                        return;
+                    }
+                    throw new Error('Network response was not ok');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Update like count
+                const likeCountElem = document.querySelector(`#like-count-${eventId}`);
+                if (likeCountElem) {
+                    likeCountElem.textContent = data.likes;
+                }
+                
+                // Toggle liked class for visual feedback
+                buttonElement.classList.toggle('liked');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
+    
+{% endblock %}

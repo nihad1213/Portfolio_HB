@@ -10,7 +10,9 @@
         
         <!-- Search Bar -->
         <div class="flex-grow mx-6">
-            <input type="text" id="search" placeholder="Search for events..." class="w-full py-2 px-4 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <form action="{{ url_for('main_routes.search') }}" method="get" class="w-full">
+                <input type="text" name="query" id="search" placeholder="Search for events..." class="w-full py-2 px-4 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </form>
         </div>
         
         <!-- Navigation Links -->
