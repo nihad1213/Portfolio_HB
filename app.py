@@ -59,6 +59,7 @@ from models.Event import Event
 from models.Ticket import Ticket
 from models.Subscriber import Subscribers
 from models.Like import Like
+from models.SavedEvent import SavedEvent
 
 # Import routes
 from routes.footer_routes import footerRoutes, get_current_year
