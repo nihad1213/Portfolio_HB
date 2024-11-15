@@ -6,6 +6,7 @@ from models.Admin import Admin
 from models.Subscriber import Subscribers
 from models.Category import Category
 from models.Event import Event
+from models.User import User
 from db import db
 from werkzeug.utils import secure_filename
 import os
@@ -49,9 +50,21 @@ def admin_index():
 def dashboard():
     # Retrieve the logged-in admin's username from session
     username = session.get('admin_username', "Admin")
+
+    total_users = User.query.count()
+    active_sessions = 0 
     
-    # Pass the username to the template
-    return render_template('admin/dashboard.html', username=username)
+    pending_tasks = Event.query.filter_by(status=False).count() 
+    
+    total_subscribers = Subscribers.query.count()
+
+    # Pass the data to the template
+    return render_template('admin/dashboard.html', 
+                           username=username,
+                           total_users=total_users,
+                           active_sessions=active_sessions,
+                           pending_tasks=pending_tasks,
+                           total_subscribers=total_subscribers)
 
 
 # Admin Routes
