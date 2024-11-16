@@ -8,16 +8,12 @@ from models.BaseModel import BaseModel  # Inheriting from BaseModel
 class Chat(BaseModel):
     __tablename__ = 'chats'
 
-    sender_id = Column(String(36), ForeignKey('users.id'), nullable=False)
-    receiver_id = Column(String(36), ForeignKey('users.id'), nullable=False)
-    message = Column(String(255), nullable=False)
+    sender_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+    receiver_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+    message = db.Column(db.String(255), nullable=False)
 
-    sender = relationship('User', foreign_keys=[sender_id], backref='sent_chats')
-    receiver = relationship('User', foreign_keys=[receiver_id], backref='received_chats')
-
-    def __init__(self, sender_id, receiver_id, message):
-        self.sender_id = sender_id
-        self.receiver_id = receiver_id
+    sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_chats')
+    receiver = db.relationship('User', foreign_keys=[receiver_id], backref='received_chats')
 
     def __repr__(self):
         return f"<Chat(sender_id='{self.sender_id}', receiver_id='{self.receiver_id}', message='{self.message}')>"
