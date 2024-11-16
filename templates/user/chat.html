@@ -146,34 +146,46 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const message = messageInput.value.trim();
     
-    // Check if the message is empty
+    console.log('Form submitted');
+    console.log('Message:', message);
+    console.log('Current receiver ID:', currentReceiverId);
+    
     if (!message) {
         showError('Message cannot be empty!');
         return;
     }
 
-    if (!currentReceiverId) return;
+    if (!currentReceiverId) {
+        showError('Please select a user to chat with!');
+        return;
+    }
 
-    // Disable form while sending
     messageInput.disabled = true;
     submitButton.disabled = true;
 
     try {
-        console.log('Sending message:', { receiver_id: currentReceiverId, message }); // Debug log
+        // Create payload
+        const payload = {
+            receiver_id: currentReceiverId,
+            message: message
+        };
+        
+        console.log('Sending payload:', payload);
+        console.log('Payload stringified:', JSON.stringify(payload));
+
         const response = await fetch('/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'
             },
-            body: JSON.stringify({
-                receiver_id: currentReceiverId,
-                message: message
-            })
+            body: JSON.stringify(payload)
         });
 
+        console.log('Response status:', response.status);
         const data = await response.json();
-        console.log('Send message response:', data); // Debug log
+        console.log('Response data:', data);
 
         if (!response.ok) {
             throw new Error(data.error || 'Failed to send message');
@@ -187,7 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error sending message:', error);
         showError(`Failed to send message: ${error.message}`);
     } finally {
-        // Re-enable form
         messageInput.disabled = !currentReceiverId;
         submitButton.disabled = !currentReceiverId;
         messageInput.focus();
