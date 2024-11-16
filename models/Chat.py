@@ -1,20 +1,23 @@
 #!/usr/bin/python3
-from sqlalchemy import Column, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
-from models.BaseModel import BaseModel
 from datetime import datetime
+from db import db
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
+from models.BaseModel import BaseModel  # Inheriting from BaseModel
 
 class Chat(BaseModel):
     __tablename__ = 'chats'
 
-    user_id = Column(String(36), ForeignKey('users.id'), nullable=False)
+    sender_id = Column(String(36), ForeignKey('users.id'), nullable=False)
+    receiver_id = Column(String(36), ForeignKey('users.id'), nullable=False)
     message = Column(String(255), nullable=False)
 
-    user = relationship('User', backref='chats')
+    sender = relationship('User', foreign_keys=[sender_id], backref='sent_chats')
+    receiver = relationship('User', foreign_keys=[receiver_id], backref='received_chats')
 
-    def __init__(self, user_id, message):
-        self.user_id = user_id
-        self.message = message
+    def __init__(self, sender_id, receiver_id, message):
+        self.sender_id = sender_id
+        self.receiver_id = receiver_id
 
     def __repr__(self):
-        return f"<Chat(user_id='{self.user_id}', message='{self.message}')>"
+        return f"<Chat(sender_id='{self.sender_id}', receiver_id='{self.receiver_id}', message='{self.message}')>"
