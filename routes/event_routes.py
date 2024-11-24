@@ -197,15 +197,65 @@ def send_attendance_email(user_email, event):
     msg['To'] = user_email
     msg['Subject'] = f'Confirmation of Attendance for {event.title}'
 
-    body = f'Hello, \n\nYou have successfully attended the event: {event.title}. We look forward to seeing you there!\n\nBest regards,\nAzerbaijanFest Team'
+    body = f"""
+Hello,
+
+You have successfully attended the event: {event.title}. We look forward to seeing you there!
+
+Best regards,
+AzerbaijanFest Team
+"""
     msg.attach(MIMEText(body, 'plain'))
 
-    # Create the PDF
+    # Create the PDF with a more vibrant and modern design
     pdf_io = io.BytesIO()
     c = canvas.Canvas(pdf_io)
-    c.drawString(100, 800, f'Event: {event.title}')
-    c.drawString(100, 780, f'Event Date: {event.date.strftime("%Y-%m-%d %H:%M")}')
-    c.drawString(100, 760, f'Location: {event.location}')
+
+    # Add a gradient-like background effect
+    c.setFillColorRGB(0.9, 0.95, 1)  # Light blue background
+    c.rect(0, 0, 600, 850, fill=True, stroke=False)
+
+    # Add a large, bold header with branding
+    c.setFont("Helvetica-Bold", 28)
+    c.setFillColorRGB(0.1, 0.3, 0.8)  # Deep blue for branding
+    c.drawCentredString(300, 800, "AzerbaijanFest Attendance Confirmation")
+
+    # Add a subtle line under the header
+    c.setStrokeColorRGB(0.1, 0.3, 0.8)  # Match branding blue
+    c.setLineWidth(2)
+    c.line(50, 790, 550, 790)
+
+    # Add event details in an elegant layout
+    c.setFont("Helvetica", 16)
+    c.setFillColorRGB(0, 0, 0)  # Black text
+    c.drawString(80, 750, f"Event: {event.title}")
+    c.drawString(80, 720, f"Date: {event.date.strftime('%Y-%m-%d %H:%M')}")
+    c.drawString(80, 690, f"Location: {event.location}")
+
+    # Add a decorative "Thank You" message in the center
+    c.setFont("Helvetica-Bold", 22)
+    c.setFillColorRGB(0.2, 0.7, 0.3)  # Bright green
+    c.drawCentredString(300, 640, "Thank you for joining us!")
+
+    # Add AzerbaijanFest branding at the bottom
+    c.setFont("Helvetica-Oblique", 14)
+    c.setFillColorRGB(0.6, 0.2, 0.7)  # Purple for branding contrast
+    c.drawCentredString(300, 120, "With love, AzerbaijanFest Team")
+
+    # Add decorative elements (optional logo)
+    c.setFont("Helvetica", 12)
+    c.setFillColorRGB(0.5, 0.5, 0.5)  # Subtle gray for details
+    c.drawCentredString(300, 100, "Visit us at www.azerbaijanfest.com")
+    
+    # Add a colorful footer bar
+    c.setFillColorRGB(0.1, 0.3, 0.8)  # Deep blue
+    c.rect(0, 50, 600, 30, fill=True, stroke=False)
+
+    # Add white text over the footer
+    c.setFont("Helvetica-Bold", 12)
+    c.setFillColorRGB(1, 1, 1)  # White
+    c.drawCentredString(300, 60, "Thank you for being a part of AzerbaijanFest!")
+
     c.save()
 
     # Attach PDF to email
@@ -216,7 +266,7 @@ def send_attendance_email(user_email, event):
     part.add_header('Content-Disposition', 'attachment', filename=f'{event.title}_attendance.pdf')
     msg.attach(part)
 
-    # Send email via SMTP using environment variables
+    # Send email via SMTP
     try:
         with smtplib.SMTP(MAIL_SERVER, MAIL_PORT) as server:
             server.starttls()  # Start TLS encryption
