@@ -28,11 +28,13 @@
 
                     <!-- Event Actions: Attend, Like, Save -->
                     <div class="flex space-x-4 mb-4">
-                        <button class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200">Attend</button>
-                        <button class="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition duration-200">
+                        <button onclick="attendEvent('{{ event.id }}')" class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200">
+                            Attend
+                        </button>
+                        <button id="like-button-{{ event.id }}" onclick="likeEvent('{{ event.id }}', this)" class="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition duration-200">
                             <i class="fas fa-heart"></i> Like
                         </button>
-                        <button class="bg-gray-500 text-white px-6 py-3 rounded-md hover:bg-gray-600 transition duration-200">
+                        <button id="save-button-{{ event.id }}" onclick="saveEvent('{{ event.id }}', this)" class="bg-gray-500 text-white px-6 py-3 rounded-md hover:bg-gray-600 transition duration-200">
                             <i class="fas fa-bookmark"></i> Save
                         </button>
                     </div>
@@ -48,8 +50,8 @@
 
                     <!-- Likes Count -->
                     <div class="flex items-center space-x-2">
-                        <button class="text-red-500 hover:text-red-700" onclick="likeEvent(event)">
-                            <i class="fas fa-heart"></i> <span class="like-count">{{ event.likes }}</span> Likes
+                        <button id="like-count-{{ event.id }}" class="text-red-500 hover:text-red-700">
+                            <i class="fas fa-heart"></i> <span id="like-count-value-{{ event.id }}">{{ event.likes }}</span> Likes
                         </button>
                     </div>
                 </div>
@@ -62,4 +64,88 @@
         </div>
     </div>
 </section>
+
+<script>
+    function attendEvent(eventId) {
+        fetch(`/attend_event/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+                return;
+            }
+            alert(data.message || 'You have successfully attended the event');
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function likeEvent(eventId, buttonElement) {
+        fetch(`/like_event/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+                return;
+            }
+            const likeCountElem = document.querySelector(`#like-count-value-${eventId}`);
+            if (likeCountElem) {
+                likeCountElem.textContent = data.likes;
+            }
+            buttonElement.classList.toggle('bg-red-500');
+            buttonElement.classList.toggle('bg-gray-500');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function saveEvent(eventId, buttonElement) {
+        fetch(`/save_event/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+                return;
+            }
+            buttonElement.classList.toggle('bg-gray-500');
+            buttonElement.classList.toggle('bg-blue-500');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 {% endblock %}
