@@ -170,6 +170,7 @@ def attend_event(event_id):
         db.session.commit()
 
         event.capacity -= 1
+        event.attendees += 1
         db.session.commit()
 
         user = User.query.get(user_id)
